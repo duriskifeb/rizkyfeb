@@ -1,0 +1,7 @@
+node_modules
+
+# Turborepo
+.turbo/
+**/.turbo/
+*.turbo.log
+**/*.turbo.log
