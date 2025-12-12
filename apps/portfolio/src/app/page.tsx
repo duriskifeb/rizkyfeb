@@ -22,9 +22,9 @@ const Home = () => {
   return (
     <>
       <Header />
-      <City />
-      <AboutAchievements />
+      {/* <City /> */}
       <Interests />
+      <AboutAchievements />
       <ExperienceSkills />
       <Projects />
       <Hackathons />

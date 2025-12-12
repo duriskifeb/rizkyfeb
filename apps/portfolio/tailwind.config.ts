@@ -18,9 +18,12 @@ const config = {
       },
     },
     extend: {
+      // PERUBAHAN DI SINI:
+      // Saya menambahkan 'header-image' sesuai ukuran gambar kamu (630.6 / 209)
       aspectRatio: {
         portrait: '5 / 5',
         og: '40 / 21',
+        'header-image': '630.6 / 209',
       },
       fontFamily: {
         sans: ['var(--font-beatrice-regular)', 'Arial', 'sans-serif'],
