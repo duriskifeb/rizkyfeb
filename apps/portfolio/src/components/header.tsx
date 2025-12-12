@@ -32,26 +32,24 @@ export const Header = () => {
 
   if (init && options) {
     return (
-      // PERBAIKAN DI SINI:
-      // Ganti 'bg-black' menjadi 'bg-[#0b0b0d]' agar warnanya persis sama dengan desainmu
       <section className='flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-[#0b0b0d] py-20'>
         {/* === CONTAINER UTAMA === */}
         <div className='relative mx-auto flex w-full max-w-[630.6px] flex-col items-center px-4'>
-          {/* === PEMBUNGKUS RELATIVE === */}
+          {/* WRAPPER HEADER SVG + PARTICLES */}
           <div className='relative w-full'>
-            {/* A. PARTIKEL */}
+            {/* PARTIKEL */}
             <Particles
               className='absolute inset-0 z-0'
               id='tsparticles'
               options={options}
             />
 
-            {/* B. GAMBAR HEADER */}
+            {/* GAMBAR HEADER */}
             <Image
               alt="Header That's Me"
               src={HeaderImage}
-              width={630.6}
-              height={209}
+              width={945}
+              height={313}
               className='relative z-10 h-auto w-full object-contain'
               priority
             />
@@ -63,7 +61,7 @@ export const Header = () => {
               <Typewriter
                 options={{
                   strings: [
-                    'Fullstack Developer',
+                    'Hi, I am rizky',
                     'Software Engineer',
                     'Tech Enthusiast',
                   ],
@@ -73,13 +71,18 @@ export const Header = () => {
                 }}
               />
             </div>
+
+            {/* DESKRIPSI SINGKAT */}
+            <p className='mt-4 max-w-[500px] text-center text-sm text-gray-300 md:text-lg'>
+              Saya membangun aplikasi modern yang clean, scalable, dan mudah
+              digunakan. Fokus pada pengalaman pengguna dan kualitas
+              development.
+            </p>
           </div>
         </div>
       </section>
     );
   }
 
-  // PERBAIKAN DI SINI JUGA (Loading State):
-  // Ganti 'bg-black' menjadi 'bg-[#0b0b0d]' supaya tidak kedip belang saat loading
-  return <div className='min-h-screen bg-[#ffffff]' />;
+  return <div className='min-h-screen bg-[#0b0b0d]' />;
 };

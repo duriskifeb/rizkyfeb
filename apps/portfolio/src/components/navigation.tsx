@@ -8,42 +8,20 @@ import { type Variants, motion } from 'framer-motion';
 import { useLenis } from 'lenis/react';
 import { useScreen, useToggle } from 'usehooks-ts';
 
-/* eslint-disable @typescript-eslint/no-unnecessary-condition -- screen is undefined on server*/
-
-/* eslint-disable jsx-a11y/no-static-element-interactions -- safe */
-/* eslint-disable jsx-a11y/click-events-have-key-events -- safe  */
+/* eslint-disable ... */
 
 const links = [
-  {
-    label: 'Interests',
-    href: '#interests',
-  },
-  {
-    label: 'Experience',
-    href: '#experience',
-  },
-  {
-    label: 'Projects',
-    href: '#projects',
-  },
-  {
-    label: 'Hackathons',
-    href: '#hackathons',
-  },
-  {
-    label: 'Resume',
-    href: '#resume',
-  },
-  {
-    label: 'Contact',
-    href: '#resume',
-  },
+  { label: 'Interests', href: '#interests' },
+  { label: 'Experience', href: '#experience' },
+  { label: 'Projects', href: '#projects' },
+  { label: 'Hackathons', href: '#hackathons' },
+  { label: 'Resume', href: '#resume' },
+  { label: 'Contact', href: '#resume' },
 ];
 
 export const NavigationButton = () => {
   const [isActive, toggleMenu] = useToggle(false);
   const screen = useScreen();
-
   const lenis = useLenis();
 
   const menuVariants: Variants = {
@@ -69,21 +47,18 @@ export const NavigationButton = () => {
   };
 
   const linkVariants: Variants = {
-    hidden: {
-      y: 50,
-      opacity: 0,
-    },
+    hidden: { y: 50, opacity: 0 },
     visible: (index: number) => ({
       y: 0,
       opacity: 1,
-      transition: {
-        delay: 0.4 + index * 0.1,
-      },
+      transition: { delay: 0.4 + index * 0.1 },
     }),
   };
 
   return (
-    <div className='relative'>
+    <div className='relative md:hidden'>
+      {/* ********↑ PENTING: agar hanya tampil di mobile ******** */}
+
       <motion.div
         animate={isActive ? 'open' : 'closed'}
         className='absolute h-[28rem] w-full max-w-sm rounded-2xl bg-white'
@@ -99,9 +74,7 @@ export const NavigationButton = () => {
               type='button'
               onClick={() => {
                 toggleMenu();
-                setTimeout(() => {
-                  lenis?.scrollTo(link.href);
-                }, 600);
+                setTimeout(() => lenis?.scrollTo(link.href), 600);
               }}
             >
               <motion.div
@@ -130,18 +103,13 @@ export const NavigationButton = () => {
         >
           <div
             className='h-full w-full bg-white text-black'
-            onClick={() => {
-              toggleMenu();
-            }}
+            onClick={toggleMenu}
           >
             <PerspectiveText label='Menu' />
           </div>
-
           <div
             className='h-full w-full bg-black text-white'
-            onClick={() => {
-              toggleMenu();
-            }}
+            onClick={toggleMenu}
           >
             <PerspectiveText label='Close' />
           </div>
@@ -151,25 +119,19 @@ export const NavigationButton = () => {
   );
 };
 
-const PerspectiveText = ({ label }: { label: string }) => {
-  return (
-    <div
-      className='ease-[cubic-bezier(0.76,0,0.24,1)] flex h-full w-full flex-col items-center justify-center text-xs transition-transform duration-500 group-hover:[transform:rotateX(90deg)] sm:text-sm'
-      style={{
-        transformStyle: 'preserve-3d',
-      }}
+const PerspectiveText = ({ label }: { label: string }) => (
+  <div
+    className='ease-[cubic-bezier(0.76,0,0.24,1)] flex h-full w-full flex-col items-center justify-center text-xs transition-transform duration-500 group-hover:[transform:rotateX(90deg)] sm:text-sm'
+    style={{ transformStyle: 'preserve-3d' }}
+  >
+    <p className='uppercase transition-all duration-500 group-hover:opacity-0 group-hover:[transform:translateY(-100%)]'>
+      {label}
+    </p>
+    <p
+      className='absolute uppercase opacity-0 transition-all duration-500 group-hover:opacity-100'
+      style={{ transform: 'rotateX(-90deg) translateY(50%)' }}
     >
-      <p className='ease-[cubic-bezier(0.76,0,0.24,1)] pointer-events-none uppercase transition-all duration-500 group-hover:opacity-0 group-hover:[transform:translateY(-100%)]'>
-        {label}
-      </p>
-      <p
-        className='ease-[cubic-bezier(0.76,0,0.24,1)] pointer-events-none absolute origin-bottom border-black uppercase opacity-0 transition-all duration-500 group-hover:opacity-100'
-        style={{
-          transform: 'rotateX(-90deg) translateY(50%)',
-        }}
-      >
-        {label}
-      </p>
-    </div>
-  );
-};
+      {label}
+    </p>
+  </div>
+);

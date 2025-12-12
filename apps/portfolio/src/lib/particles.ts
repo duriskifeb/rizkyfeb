@@ -7,7 +7,7 @@ export const getParticles = (screenWidth?: number) => {
     autoPlay: true,
     background: {
       color: {
-        value: '#ffffff',
+        value: '#0b0b0d',
       },
       image: '',
       position: '50% 50%',

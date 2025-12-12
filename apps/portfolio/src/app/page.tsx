@@ -25,13 +25,13 @@ const Home = () => {
       {/* <City /> */}
       <Interests />
       <AboutAchievements />
-      <ExperienceSkills />
-      <Projects />
-      <Hackathons />
-      <WorldMap hackathons={hackathons} />
-      <GrantsSpeaking />
-      <Blogs />
-      <ResumeContact />
+      {/* <ExperienceSkills /> */}
+      {/* <Projects /> */}
+      {/* <Hackathons /> */}
+      {/* <WorldMap hackathons={hackathons} /> */}
+      {/* <GrantsSpeaking /> */}
+      {/* <Blogs /> */}
+      {/* <ResumeContact /> */}
       <Footer />
       <ScrollToTop />
     </>
