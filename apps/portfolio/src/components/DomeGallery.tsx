@@ -1,7 +1,6 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef } from 'react';
-
 import { useGesture } from '@use-gesture/react';
 
 // --- Types ---
@@ -86,7 +85,6 @@ function buildItems(pool: ImageItem[], seg: number): ItemDef[] {
     return { src: image.src || '', alt: image.alt || '' };
   });
 
-  // Pastikan array ini bertipe fix object, bukan undefined
   const usedImages: { src: string; alt: string }[] = Array.from(
     { length: totalSlots },
     (_, i) =>
@@ -101,12 +99,9 @@ function buildItems(pool: ImageItem[], seg: number): ItemDef[] {
       for (let j = i + 1; j < usedImages.length; j++) {
         const candidate = usedImages[j];
         if (candidate && candidate.src !== current.src) {
-          // --- BAGIAN FIX ---
-          // Gunakan tanda seru (!) untuk memaksa TypeScript yakin nilainya ada
           const tmp = usedImages[i]!;
           usedImages[i] = usedImages[j]!;
           usedImages[j] = tmp;
-          // ------------------
           break;
         }
       }
@@ -144,7 +139,7 @@ export function DomeGallery({
   minRadius = 600,
   maxRadius = Infinity,
   padFactor = 0.25,
-  overlayBlurColor = '#000000',
+  overlayBlurColor = '#0b0b0d', // DEFAULT THEME COLOR UPDATE
   maxVerticalRotationDeg = DEFAULTS.maxVerticalRotationDeg,
   dragSensitivity = DEFAULTS.dragSensitivity,
   enlargeTransitionMs = DEFAULTS.enlargeTransitionMs,
@@ -390,6 +385,8 @@ export function DomeGallery({
     { target: mainRef, eventOptions: { passive: false } }
   );
 
+  // --- THEME UPDATE: GLASSMORPHISM & BORDERS ---
+  // Saya menambahkan border, shadow, dan background gradient pada .item__image
   const cssStyles = `
     .sphere-root { --radius: 520px; --viewer-pad: 72px; --circ: calc(var(--radius) * 3.14); --rot-y: calc((360deg / var(--segments-x)) / 2); --rot-x: calc((360deg / var(--segments-y)) / 2); --item-width: calc(var(--circ) / var(--segments-x)); --item-height: calc(var(--circ) / var(--segments-y)); }
     .sphere-root * { box-sizing: border-box; }
@@ -397,7 +394,25 @@ export function DomeGallery({
     .stage { width: 100%; height: 100%; display: grid; place-items: center; position: absolute; inset: 0; margin: auto; perspective: calc(var(--radius) * 2); perspective-origin: 50% 50%; }
     .sphere { transform: translateZ(calc(var(--radius) * -1)); will-change: transform; position: absolute; }
     .sphere-item { width: calc(var(--item-width) * var(--item-size-x)); height: calc(var(--item-height) * var(--item-size-y)); position: absolute; top: -999px; bottom: -999px; left: -999px; right: -999px; margin: auto; transform-origin: 50% 50%; backface-visibility: hidden; transition: transform 300ms; transform: rotateY(calc(var(--rot-y) * (var(--offset-x) + ((var(--item-size-x) - 1) / 2)) + var(--rot-y-delta, 0deg))) rotateX(calc(var(--rot-x) * (var(--offset-y) - ((var(--item-size-y) - 1) / 2)) + var(--rot-x-delta, 0deg))) translateZ(var(--radius)); }
-    .item__image { position: absolute; inset: 10px; border-radius: var(--tile-radius, 12px); overflow: hidden; cursor: grab; backface-visibility: hidden; transition: transform 300ms; transform: translateZ(0); box-shadow: 0 0 10px rgba(0,0,0,0.5); }
+    
+    /* MODIFIED: Glass Style for Images */
+    .item__image { 
+      position: absolute; 
+      inset: 10px; 
+      border-radius: var(--tile-radius, 12px); 
+      overflow: hidden; 
+      cursor: grab; 
+      backface-visibility: hidden; 
+      transition: transform 300ms, box-shadow 300ms, border-color 300ms; 
+      transform: translateZ(0); 
+      /* Efek Kaca / Premium */
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255, 255, 255, 0.15); 
+    }
+    .item__image:hover {
+        border-color: rgba(255, 255, 255, 0.5);
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.3); /* Glow biru tipis saat hover */
+    }
     .item__image:active { cursor: grabbing; }
   `;
 
@@ -409,6 +424,7 @@ export function DomeGallery({
         {
           ['--segments-x' as any]: segments,
           ['--segments-y' as any]: segments,
+          ['--overlay-blur-color' as any]: overlayBlurColor, // Ensure variable is passed
         } as React.CSSProperties
       }
     >
@@ -436,17 +452,45 @@ export function DomeGallery({
                   } as React.CSSProperties
                 }
               >
-                <div className='item__image bg-neutral-800'>
+                {/* MODIFIED: Updated background to match theme darker tone */}
+                <div className='item__image bg-[#1a1a1a]'>
                   <img
                     src={it.src}
                     alt={it.alt}
-                    className='pointer-events-none h-full w-full object-cover'
+                    className='pointer-events-none h-full w-full object-cover opacity-90 hover:opacity-100 transition-opacity'
                   />
+                  {/* Overlay gradasi halus di dalam gambar */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
                 </div>
               </div>
             ))}
           </div>
         </div>
+
+        {/* --- THEME UPDATE: VIGNETTE OVERLAYS --- */}
+        {/* Ini penting agar bola terlihat "memudar" di pinggir layar, menyatu dengan background */}
+        
+        {/* Radial Fade Center */}
+        <div
+            className="absolute inset-0 pointer-events-none z-[5]"
+            style={{
+              background: `radial-gradient(circle at center, transparent 30%, var(--overlay-blur-color) 120%)`
+            }}
+        />
+
+        {/* Top/Bottom Fade Strips */}
+        <div
+            className="absolute left-0 right-0 top-0 h-[150px] z-[5] pointer-events-none rotate-180"
+            style={{
+              background: `linear-gradient(to bottom, transparent, var(--overlay-blur-color))`
+            }}
+        />
+        <div
+            className="absolute left-0 right-0 bottom-0 h-[150px] z-[5] pointer-events-none"
+            style={{
+              background: `linear-gradient(to bottom, transparent, var(--overlay-blur-color))`
+            }}
+        />
       </main>
     </div>
   );

@@ -78,9 +78,9 @@ export const Header = () => {
             <Typewriter
               options={{
                 strings: [
-                  'Fullstack Developer',
-                  'Software Engineer',
-                  'Tech Enthusiast',
+                  'Hi, I am Rizkyfeb',
+                  'Software Engineer 23',
+                  'Welcome to My Portfolio',
                 ],
                 autoStart: true,
                 loop: true,

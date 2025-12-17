@@ -1,624 +1,263 @@
 'use client';
 
-import React, { useRef, useEffect } from 'react';
-
 import Image from 'next/image';
 
-import { Globe, Twitter, MessageCircle, FileText, Video, Presentation } from 'lucide-react';
+import React, { useRef } from 'react';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useScroll,
+  useTransform,
+} from 'framer-motion';
 
-const getLinkIcon = (label: string) => {
-  const lowerLabel = label.toLowerCase();
-  if (lowerLabel.includes('x') || lowerLabel.includes('twitter')) {
-    return Twitter;
-  }
-  if (lowerLabel.includes('discord')) {
-    return MessageCircle;
-  }
-  if (lowerLabel.includes('website')) {
-    return Globe;
-  }
-  if (lowerLabel.includes('litepaper') || lowerLabel.includes('paper')) {
-    return FileText;
-  }
-  if (lowerLabel.includes('video')) {
-    return Video;
-  }
-  if (lowerLabel.includes('pitch') || lowerLabel.includes('deck')) {
-    return Presentation;
-  }
-  return Globe;
-};
+import {
+  Briefcase,
+  Code2,
+  Cpu,
+  FileText,
+  Globe,
+  MessageCircle,
+  Presentation,
+  Twitter,
+  Video,
+} from 'lucide-react';
 
-// Map company names to their logo file paths for work experience
-const getExperienceLogo = (company: string): string | null => {
-  const logoMap: Record<string, string> = {
-    'Bharat DAO': '/bharat_dao.jpg',
-    'APT-Casino': '/APT-Casino.png',
-    'Convex Foundation': '/convex.png',
-    'Polygon': '/polygon.jpg',
-    'buildspace': '/buildspace.jpg',
-    'Phyllo': '/phyllo.png',
-    '5ireChain': '/5irechain.jpg',
-    'Affine Group': '/affine_group.jpeg',
-    'SoCool': '/socool.jpeg',
-  };
-  
-  return logoMap[company] ?? null;
-};
-
-interface ExperienceLink {
-  label: string;
-  url: string;
-}
-
-interface Experience {
-  company: string;
-  role: string;
-  period: string;
-  location: string;
-  description: string;
-  highlight: string;
-  links?: ExperienceLink[];
-}
-
-const experiences: Experience[] = [
+// --- DATA EXPERIENCE (Disesuaikan untuk Mahasiswa/Junior) ---
+const experiences = [
   {
-    company: 'Bharat DAO',
-    role: 'Co-Founder & CEO',
-    period: 'Jun 2025 - Aug 2025',
+    company: 'Freelance Developer',
+    role: 'Full Stack Developer',
+    period: 'Jan 2024 - Present',
     location: 'Remote',
-    description: "Built Indias' fastest-growing Web3 Developer community. Gateway for 1000+ Global Blockchains & Protocols. Grew from ZERO to 10,000+ developers in 45 days with 100% weekly growth rate.",
-    highlight: '10,000+ developers in 45 days',
-    links: [
-      { label: 'X', url: 'https://x.com/bharat_dao_' },
-      { label: 'Website', url: 'https://bharat-dao.vercel.app/' },
-    ],
-  },
-  {
-    company: 'APT-Casino',
-    role: 'Co-Founder & CEO',
-    period: 'Jul 2024 - Apr 2025',
-    location: 'Remote',
-    description: 'Built a fully on-chain casino for the Aptos Ecosystem. Backed by Aptos and Movement Labs. Grants: $5,000 (Aptos), 10,000 MOVE (Movement Labs), $6,500 (Top Blockchain Startup Award). Won 15 hackathons.',
-    highlight: 'Won 15 hackathons',
-    links: [
-      { label: 'Pitch Deck', url: 'https://www.figma.com/slides/7dikFunYfSCoTzFgufpNBv/APT-Casino-Aptos?node-id=0-1&t=5jK7zouSr3B8QfBC-1' },
-      { label: 'Litepaper', url: 'https://docs.google.com/document/d/1yn4I_o_U_DiNIRn-qfzelF-dKzcPVSnMORCMsfcwXxQ/edit?usp=sharing' },
-      { label: 'Pitch Video', url: 'https://drive.google.com/file/d/1i-LBGqOFhsJh1ml5Xj4QIRbwRk8byD_V/view?usp=sharing' },
-      { label: 'Website', url: 'https://apt-casino-aptos.vercel.app/' },
-    ],
-  },
-  {
-    company: 'Convex Foundation',
-    role: 'DevRel',
-    period: 'Apr 2024 - Jun 2024',
-    location: 'London, UK (Remote)',
-    description: 'Onboarded 20+ protocols, developer docs write-up & feedback, designed growth strategy, tokenomics and governance. Led Development Team and Developer Advocate Program.',
-    highlight: '7000% community growth',
-    links: [
-      { label: 'Website', url: 'https://convex.world/' },
-      { label: 'Discord', url: 'https://discord.com/invite/xfYGq4CT7v' },
-    ],
-  },
-  {
-    company: 'Polygon',
-    role: 'Developer Advocate',
-    period: 'Mar 2022 - Jan 2024',
-    location: 'Bengaluru, India (Remote)',
-    description: 'Onboarded 15,000+ new members to the community and orchestrated 12 impactful events. Increased technical community engagement by 300%, generated 25% increase in project collaborations.',
-    highlight: '15,000+ members onboarded',
-    links: [
-      { label: 'X', url: 'https://x.com/0xPolygon' },
-      { label: 'Website', url: 'https://polygon.technology/' },
-      { label: 'Discord', url: 'https://discord.com/invite/0xPolygonCommunity' },
-    ],
-  },
-  {
-    company: 'buildspace',
-    role: 'N&W S4 Builder',
-    period: 'Sep 2023 - Oct 2023',
-    location: 'San Francisco, California (Remote)',
-    description: '6-week program funded by Y Combinator, a16z to build a revolutionary product in tech. Ended with 3-day demo weekend in San Francisco and Dubai.',
-    highlight: 'Y Combinator & a16z funded',
-    links: [
-      { label: 'X', url: 'https://x.com/_buildspace' },
-    ],
-  },
-  {
-    company: 'Phyllo',
-    role: 'Software Engineer Intern',
-    period: 'Aug 2022 - Oct 2022',
-    location: 'San Francisco, California (Remote)',
-    description: 'Performed Unit Test Cases for product classes. Integration Implementer for WalletConnect, NFT Production and Distribution.',
-    highlight: 'WalletConnect integration',
-    links: [
-      { label: 'Website', url: 'https://www.getphyllo.com/' },
-    ],
-  },
-  {
-    company: '5ireChain',
-    role: 'Junior Software Developer',
-    period: 'Jan 2022 - Mar 2022',
-    location: 'London, UK (Remote)',
-    description: 'Worked on Backend Build of the 5ire.org portal for package migration & Multi-stage docker file builds. Responsible for UI/UX Upgradation & Smart build on the front-end.',
-    highlight: 'Backend & Frontend work',
-    links: [
-      { label: 'X', url: 'https://x.com/5ireChain' },
-      { label: 'Website', url: 'https://5ire.org/' },
-    ],
-  },
-  {
-    company: 'Affine Group',
-    role: 'Software Development Engineer Intern',
-    period: 'Aug 2021 - May 2022',
-    location: 'London, UK (Remote)',
-    description: 'Built, integrated, tested and deployed open-source banking application Cyclos onto Node-Red, IBM Cloud, Google Cloud Platform and Hyperledger Fabric.',
-    highlight: 'Multi-cloud deployment',
+    description:
+      'Developing custom websites and mobile applications for various clients. Focusing on clean architecture and scalable backend solutions.',
+    highlight: '5+ Happy Clients',
+    tech: ['Flutter', 'Laravel', 'React'],
     links: [],
   },
   {
-    company: 'SoCool',
-    role: 'Full Stack Developer',
-    period: 'Dec 2021 - Feb 2022',
-    location: 'Oslo, Norway (Remote)',
-    description: 'Developed an NFT Marketplace for Creating, Collecting and Distributing NFTs among users via Blockchain Technology. Created an E-learning app where courses minted NFTs and users pay by Crypto.',
-    highlight: 'NFT Marketplace & E-learning app',
+    company: 'Telkom University',
+    role: 'Lab Assistant (RPL)',
+    period: 'Aug 2023 - Dec 2023',
+    location: 'Surabaya, Indonesia',
+    description:
+      'Mentored junior students in Algorithms & Data Structures. Assisted lecturers in grading and practical exams.',
+    highlight: 'Mentored 30+ Students',
+    tech: ['C++', 'Java', 'Python'],
+    links: [],
+  },
+  {
+    company: 'Tech Startup (Intern)',
+    role: 'Mobile Dev Intern',
+    period: 'May 2023 - Aug 2023',
+    location: 'Hybrid',
+    description:
+      'Collaborated with the engineering team to fix bugs and implement new UI features for the main product app.',
+    highlight: 'Fixed 20+ Critical Bugs',
+    tech: ['Flutter', 'Firebase'],
     links: [],
   },
 ];
 
-// Map language names to their logo file paths
-const getLanguageLogo = (language: string): string | null => {
-  const logoMap: Record<string, string> = {
-    'Move': '/move.png',
-    'Solidity': '/solidity.png',
-    'Python 3': '/python.jpeg',
-    'JavaScript': '/javascript.png',
-    'TypeScript': '/typescript.png',
-  };
-  
-  return logoMap[language] ?? null;
-};
-
-// Map ecosystem names to their logo file paths
-const getEcosystemLogo = (ecosystem: string): string | null => {
-  const logoMap: Record<string, string> = {
-    'Aptos': '/aptos.png',
-    'Movement Labs': '/movement_labs.jpeg',
-    'Mantle': '/mantle.png',
-    'Polygon': '/polygon.jpg',
-    'EigenLayer': '/eigenlayer.png',
-    'Xenea': '/xenea.avif',
-    'Xion': '/xion.png',
-    'Avalanche': '/avalanche.jpg',
-    'BNB': '/bnbchain.png',
-    'Flow': '/flow.png',
-    'Monad': '/monad.png',
-    'Chainlink': '/chainlink.png',
-    'Celo': '/celo.png',
-    'Near': '/near.png',
-    'Oraichain': '/oraichain.png',
-    'Stellar': '/stellar.png',
-    'Coinbase': '/coinbase.png',
-    'WorldCoin': '/worldcoin.png',
-    'Scroll': '/scroll.png',
-    'Chiliz': '/chiliz.png',
-    'Nibiru': '/nibiru.jpeg',
-    'Citrea': '/citrea.png',
-    'Educhain': '/educhain.png',
-    'Ripple': '/ripple.png',
-    'Manta': '/manta.png',
-    'Optimism': '/optimism.png',
-    'The Graph': '/the_graph.jpeg',
-    'Inco': '/inco.png',
-    'Starknet': '/starknet.png',
-    'Pyth': '/pyth.png',
-    'Stacks': '/stacks.png',
-    '0g': '/0g.png',
-    'Push': '/push.png',
-    'Algorand': '/algorand.png',
-    'ICP': '/icp.jpeg',
-    'Polkadot': '/polkadot.png',
-    'SUI': '/sui.png',
-  };
-  
-  return logoMap[ecosystem] ?? null;
-};
-
+// --- DATA SKILLS ---
 const skills = {
   languages: [
-    { name: 'Move', level: 5 },
-    { name: 'Solidity', level: 5 },
-    { name: 'Python 3', level: 4 },
-    { name: 'Rust', level: 3 },
-    { name: 'JavaScript', level: 5 },
-    { name: 'TypeScript', level: 5 },
+    { name: 'Dart', level: 5, icon: '/images/tech/dart.png' }, // Ganti path icon nanti
+    { name: 'PHP', level: 5, icon: '/images/tech/php.png' },
+    { name: 'JavaScript', level: 4, icon: '/images/tech/js.png' },
+    { name: 'Python', level: 3, icon: '/images/tech/python.png' },
+    { name: 'SQL', level: 4, icon: '/images/tech/sql.png' },
   ],
-  web3: [
-    'ERC20', 'ERC721', 'SOLIDITY', 'MOVE', 'RUST', 'DeFi', 'GameFi',
-    'SocialFi', 'GambleFi',
+  frameworks: [
+    'Flutter',
+    'Laravel',
+    'React.js',
+    'Next.js',
+    'Tailwind CSS',
+    'Node.js',
+    'Express',
   ],
-  ecosystems: [
-    'Aptos', 'Movement Labs', 'Mantle', 'Polygon', 'EigenLayer', 'Xenea', 'Xion',
-    'Avalanche', 'BNB', 'Flow', 'Monad', 'Chainlink', 'Celo', 'Near', 'Oraichain',
-    'Stellar', 'Coinbase', 'WorldCoin', 'Scroll', 'Chiliz', 'Nibiru', 'Citrea',
-    'Educhain', 'Ripple', 'Manta', 'Optimism', 'The Graph', 'Inco', 'Starknet',
-    'Pyth', 'Stacks', '0g', 'Push', 'Algorand', 'ICP', 'Polkadot', 'SUI',
+  tools: [
+    'Git',
+    'Figma',
+    'Blender',
+    'Postman',
+    'VS Code',
+    'Android Studio',
+    'Docker',
   ],
 };
 
-export const ExperienceSkills = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const experienceScrollRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start'],
-  });
+// --- COMPONENTS KECIL ---
 
-  const leftOpacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
-  const rightOpacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
-  const leftX = useTransform(scrollYProgress, [0, 0.5, 1], [-30, 0, -30]);
-  const rightX = useTransform(scrollYProgress, [0, 0.5, 1], [30, 0, 30]);
-
-  useEffect(() => {
-    const experienceContainer = experienceScrollRef.current;
-    if (!experienceContainer) return;
-
-    const handleWheel = (e: WheelEvent) => {
-      const { scrollTop, scrollHeight, clientHeight } = experienceContainer;
-      const isAtTop = scrollTop === 0;
-      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
-      const isScrollingDown = e.deltaY > 0;
-      const isScrollingUp = e.deltaY < 0;
-
-      // If scrolling down and at bottom, or scrolling up and at top, allow page scroll
-      if ((isScrollingDown && isAtBottom) || (isScrollingUp && isAtTop)) {
-        return;
-      }
-
-      // Otherwise, prevent default and scroll the container
-      e.preventDefault();
-      experienceContainer.scrollTop += e.deltaY;
-    };
-
-    experienceContainer.addEventListener('wheel', handleWheel, { passive: false });
-
-    return () => {
-      experienceContainer.removeEventListener('wheel', handleWheel);
-    };
-  }, []);
-
+const ExperienceCard = ({
+  exp,
+  index,
+}: {
+  exp: (typeof experiences)[0];
+  index: number;
+}) => {
   return (
-    <div ref={ref} className='relative z-[2] min-h-screen' id='experience'>
-      <div className='sticky top-0 flex min-h-screen flex-col items-center overflow-hidden md:flex-row'>
-        {/* Left Side - Experience */}
-        <motion.div
-          className='relative flex h-full min-h-screen w-full flex-col items-start justify-center border-b border-white/10 bg-gradient-to-r from-white/[0.02] to-transparent px-8 py-16 sm:px-12 md:w-1/2 md:border-b-0 md:border-r md:px-16 md:py-0'
-          style={{ opacity: leftOpacity, x: leftX }}
-        >
-          <motion.div
-            className='mb-8 font-elgocAlt text-[3rem] sm:text-[4rem] md:text-[5rem] leading-[0.9] text-white'
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, stiffness: 100, type: 'spring' }}
-          >
-            Experience
-          </motion.div>
-          
-          <div 
-            ref={experienceScrollRef}
-            className='relative w-full max-w-2xl max-h-[70vh] overflow-y-auto pr-4 scroll-smooth focus:outline-none'
-            role='region'
-            aria-label='Work Experience'
-            style={{ scrollBehavior: 'smooth' }}
-          >
-            <div className='relative'>
-              {/* Timeline line */}
-              <div className='absolute left-6 top-0 bottom-0 w-0.5 bg-white/10' />
-
-              <div className='space-y-8 pb-4'>
-              {experiences.map((exp, index) => {
-                const uniqueKey = `${exp.company}-${String(exp.period)}`;
-                const delay = index * 0.08;
-                
-                return (
-                  <motion.div
-                    key={uniqueKey}
-                    className='relative flex items-start gap-6'
-                    initial={{ opacity: 0, x: -30 }}
-                    transition={{ delay, duration: 0.5 }}
-                    viewport={{ once: true, margin: '-100px' }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                  >
-                    {/* Timeline dot */}
-                    <div className='relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-white/20 bg-black'>
-                      <div className='h-3 w-3 rounded-full bg-white/40' />
-                    </div>
-
-                    {/* Content card */}
-                    <motion.div
-                      className='group relative flex-1 overflow-hidden rounded-xl border border-white/5 bg-white/[0.03] p-6 backdrop-blur-md transition-all duration-500 hover:border-white/15 hover:bg-white/[0.08] hover:shadow-[0_8px_32px_rgba(0,0,0,0.4)]'
-                      whileHover={{ 
-                        scale: 1.02,
-                        y: -4,
-                        transition: { duration: 0.3, type: 'spring', stiffness: 300 }
-                      }}
-                    >
-                      {/* Subtle gradient overlay */}
-                      <motion.div
-                        className='absolute inset-0 bg-gradient-to-br from-white/[0.05] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500'
-                      />
-                      <div className='relative z-10'>
-                        <div className='mb-3 flex items-center gap-3'>
-                          {(() => {
-                            const logoPath = getExperienceLogo(exp.company);
-                            return logoPath ? (
-                              <motion.div
-                                className='relative h-10 w-10 shrink-0'
-                                whileHover={{ scale: 1.2, rotate: [0, -10, 10, 0] }}
-                                transition={{ duration: 0.4 }}
-                              >
-                                <Image
-                                  alt={`${exp.company} logo`}
-                                  className='object-contain'
-                                  height={40}
-                                  src={logoPath}
-                                  width={40}
-                                />
-                              </motion.div>
-                            ) : null;
-                          })()}
-                          <div className='flex flex-wrap items-baseline gap-2'>
-                            <span className='font-beatriceMedium text-base font-semibold text-white'>
-                              {exp.role}
-                            </span>
-                            <span className='text-white/30'>@</span>
-                            <span className='font-beatriceMedium text-base font-semibold text-white/90'>
-                              {exp.company}
-                            </span>
-                          </div>
-                        </div>
-                        <div className='mb-3 flex items-center justify-between gap-4'>
-                          <span className='text-xs font-medium text-white/40 tracking-wide'>
-                            {exp.period} • {exp.location}
-                          </span>
-                          {exp.links && exp.links.length > 0 && (
-                            <div className='flex flex-wrap gap-2'>
-                              {exp.links.map((link) => {
-                                const Icon = getLinkIcon(link.label);
-                                return (
-                                  <a
-                                    key={link.label}
-                                    href={link.url}
-                                    rel='noopener noreferrer'
-                                    target='_blank'
-                                    className='group relative flex items-center justify-center rounded-md border border-white/10 bg-white/[0.05] p-1.5 transition-all hover:border-white/20 hover:bg-white/[0.1]'
-                                    title={link.label}
-                                  >
-                                    <Icon className='h-3.5 w-3.5 text-white/70 transition-colors group-hover:text-white/90' />
-                                  </a>
-                                );
-                              })}
-                            </div>
-                          )}
-                        </div>
-                        <div className='mb-3 rounded-lg bg-white/[0.08] border border-white/5 px-3 py-1.5 text-xs font-semibold text-white/80 backdrop-blur-sm'>
-                          {exp.highlight}
-                        </div>
-                        <p className='mb-3 text-sm leading-relaxed text-white/50'>{exp.description}</p>
-                      </div>
-                    </motion.div>
-                  </motion.div>
-                );
-              })}
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Right Side - Skills */}
-        <motion.div
-          className='relative flex h-full min-h-screen w-full flex-col items-start justify-center bg-gradient-to-l from-white/[0.02] to-transparent px-8 py-16 sm:px-12 md:w-1/2 md:px-16 md:py-0'
-          style={{ opacity: rightOpacity, x: rightX }}
-        >
-          <motion.div
-            className='mb-8 font-elgocAlt text-[3rem] sm:text-[4rem] md:text-[5rem] leading-[0.9] text-white'
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, stiffness: 100, type: 'spring' }}
-          >
-            Skills
-          </motion.div>
-          
-          <div className='relative w-full max-w-2xl pr-4'>
-            {/* Programming Languages */}
-            <motion.div
-              className='mb-10'
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 0.5 }}
-            >
-              <h3 className='mb-4 font-beatriceMedium text-lg font-semibold text-white/80'>
-                Languages
-              </h3>
-              <div className='grid grid-cols-3 gap-3 sm:grid-cols-3 lg:grid-cols-3'>
-                {skills.languages.map((skill, index) => {
-                  const delay = index * 0.04;
-                  
-                  return (
-                    <motion.div
-                      key={skill.name}
-                      className='group relative flex flex-col items-center overflow-hidden rounded-lg border border-white/5 bg-white/[0.03] p-3 backdrop-blur-md transition-all duration-500 hover:border-white/15 hover:bg-white/[0.08] hover:shadow-[0_4px_16px_rgba(0,0,0,0.3)]'
-                      initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                      transition={{ delay, duration: 0.5, stiffness: 100, type: 'spring' }}
-                      viewport={{ margin: '-30px', once: true }}
-                      whileHover={{ 
-                        scale: 1.08,
-                        transition: { duration: 0.3, stiffness: 300, type: 'spring' },
-                        y: -4,
-                      }}
-                      whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                    >
-                      <motion.div
-                        className='absolute inset-0 bg-gradient-to-br from-white/[0.05] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500'
-                      />
-                      {(() => {
-                        const logoPath = getLanguageLogo(skill.name);
-                        return logoPath ? (
-                          <motion.div
-                            className='mb-2 relative z-10 h-8 w-8 shrink-0 overflow-hidden rounded-sm'
-                            whileHover={{ scale: 1.3, rotate: 360 }}
-                            transition={{ duration: 0.5 }}
-                          >
-                            <Image
-                              alt={skill.name}
-                              className='object-contain'
-                              height={32}
-                              src={logoPath}
-                              width={32}
-                            />
-                          </motion.div>
-                        ) : (
-                          <motion.span 
-                            className='mb-2 text-xl relative z-10'
-                            whileHover={{ scale: 1.3, rotate: 360 }}
-                            transition={{ duration: 0.5 }}
-                          >
-                            {skill.name === 'Rust' ? '🦀' : '💻'}
-                          </motion.span>
-                        );
-                      })()}
-                      <span className='mb-2 text-center text-xs font-semibold text-white relative z-10'>{skill.name}</span>
-                      <div className='flex gap-1 relative z-10'>
-                        {Array.from({ length: 5 }, (_, i) => i).map((i: number) => {
-                          const levelKey = `level-${String(i)}-${skill.name}`;
-                          
-                          return (
-                            <motion.div
-                              key={levelKey}
-                              className={`h-1 w-2.5 rounded-full ${
-                                i < skill.level ? 'bg-white/70' : 'bg-white/10'
-                              }`}
-                              initial={{ scale: 0 }}
-                              transition={{ delay: index * 0.04 + i * 0.05, duration: 0.3 }}
-                              viewport={{ once: true }}
-                              whileInView={{ scale: 1 }}
-                            />
-                          );
-                        })}
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </motion.div>
-
-            {/* Web3 Stack */}
-            <motion.div
-              className='mb-10'
-              initial={{ opacity: 0, y: 20 }}
-              transition={{ delay: 0.1, duration: 0.5 }}
-              viewport={{ once: true, margin: '-100px' }}
-              whileInView={{ opacity: 1, y: 0 }}
-            >
-              <h3 className='mb-4 font-beatriceMedium text-lg font-semibold text-white/80'>
-                Web3 Stack
-              </h3>
-              <div className='flex flex-wrap gap-2'>
-                {skills.web3.map((tech, index) => {
-                  const delay = index * 0.015;
-                  
-                  return (
-                    <motion.span
-                      key={tech}
-                      className='group relative overflow-hidden rounded-md border border-white/5 bg-white/[0.03] px-2.5 py-1 text-xs font-semibold text-white/70 backdrop-blur-md transition-all duration-300 hover:border-white/15 hover:bg-white/[0.12] hover:text-white/90 hover:shadow-[0_2px_8px_rgba(0,0,0,0.2)]'
-                      initial={{ opacity: 0, scale: 0.8, y: 10 }}
-                      transition={{ delay, duration: 0.4, stiffness: 150, type: 'spring' }}
-                      viewport={{ margin: '-20px', once: true }}
-                      whileHover={{ 
-                        scale: 1.1,
-                        transition: { duration: 0.2, stiffness: 400, type: 'spring' },
-                        y: -2,
-                      }}
-                      whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                    >
-                      <motion.div
-                        className='absolute inset-0 bg-gradient-to-r from-white/[0.08] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300'
-                      />
-                      <span className='relative z-10'>{tech}</span>
-                    </motion.span>
-                  );
-                })}
-              </div>
-            </motion.div>
-
-            {/* Ecosystems */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              viewport={{ once: true, margin: '-100px' }}
-              whileInView={{ opacity: 1, y: 0 }}
-            >
-              <h3 className='mb-4 font-beatriceMedium text-lg font-semibold text-white/80'>
-                Ecosystems Worked with/ Built on (30+)
-              </h3>
-              <div className='flex flex-wrap gap-2'>
-                {skills.ecosystems.map((ecosystem, index) => {
-                  const delay = index * 0.01;
-                  const logoPath = getEcosystemLogo(ecosystem);
-                  
-                  return (
-                    <motion.span
-                      key={ecosystem}
-                      className='group relative flex items-center gap-1.5 overflow-hidden rounded-md border border-white/5 bg-white/[0.03] px-2.5 py-1 text-xs font-medium text-white/60 backdrop-blur-md transition-all duration-300 hover:border-white/15 hover:bg-white/[0.12] hover:text-white/80 hover:shadow-[0_2px_8px_rgba(0,0,0,0.2)]'
-                      initial={{ opacity: 0, scale: 0.8, y: 10 }}
-                      transition={{ delay, duration: 0.4, stiffness: 150, type: 'spring' }}
-                      viewport={{ margin: '-20px', once: true }}
-                      whileHover={{ 
-                        scale: 1.08,
-                        transition: { duration: 0.2, stiffness: 400, type: 'spring' },
-                        y: -2,
-                      }}
-                      whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                    >
-                      <motion.div
-                        className='absolute inset-0 bg-gradient-to-r from-white/[0.06] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300'
-                      />
-                      {logoPath && (
-                        <div className='relative z-10 h-4 w-4 shrink-0 overflow-hidden rounded-sm'>
-                          <Image
-                            alt={ecosystem}
-                            className='object-contain'
-                            height={16}
-                            src={logoPath}
-                            width={16}
-                          />
-                        </div>
-                      )}
-                      <span className='relative z-10'>{ecosystem}</span>
-                    </motion.span>
-                  );
-                })}
-              </div>
-            </motion.div>
-          </div>
-        </motion.div>
-
-        {/* Animated divider line */}
-        <motion.div
-          className='absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-white/20 to-transparent md:block'
-          initial={{ scaleY: 0 }}
-          whileInView={{ scaleY: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, ease: 'easeOut' }}
-        />
+    <motion.div
+      initial={{ opacity: 0, x: -20 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ delay: index * 0.2 }}
+      className='relative pl-8 md:pl-0'
+    >
+      {/* Timeline Line & Dot (Hanya muncul di Desktop layout grid) */}
+      <div className='absolute bottom-0 left-[-9px] top-0 hidden w-[2px] bg-white/10 md:block'>
+        <div className='absolute left-1/2 top-6 h-4 w-4 -translate-x-1/2 rounded-full border-2 border-blue-500 bg-[#0b0b0d] shadow-[0_0_10px_rgba(59,130,246,0.5)]'></div>
       </div>
-    </div>
+
+      {/* Mobile Line */}
+      <div className='absolute bottom-0 left-0 top-0 w-[2px] bg-white/10 md:hidden'>
+        <div className='absolute left-1/2 top-6 h-3 w-3 -translate-x-1/2 rounded-full bg-blue-500'></div>
+      </div>
+
+      <div className='group relative rounded-2xl border border-white/10 bg-white/[0.02] p-6 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.04]'>
+        <div className='mb-4 flex flex-col justify-between sm:flex-row sm:items-center'>
+          <div>
+            <h3 className='font-elgocAlt text-xl font-bold text-white'>
+              {exp.role}
+            </h3>
+            <p className='text-sm font-medium text-blue-400'>{exp.company}</p>
+          </div>
+          <div className='mt-2 rounded bg-white/5 px-2 py-1 font-mono text-xs text-gray-500 sm:mt-0'>
+            {exp.period}
+          </div>
+        </div>
+
+        <p className='mb-4 text-sm leading-relaxed text-gray-400'>
+          {exp.description}
+        </p>
+
+        <div className='mt-4 flex flex-wrap gap-2'>
+          <span className='rounded-full border border-green-400/20 bg-green-400/10 px-3 py-1 text-xs font-semibold text-green-400'>
+            {exp.highlight}
+          </span>
+          {exp.tech.map((t) => (
+            <span
+              key={t}
+              className='rounded-md border border-white/5 px-2 py-1 text-xs text-gray-500'
+            >
+              {t}
+            </span>
+          ))}
+        </div>
+      </div>
+    </motion.div>
   );
 };
 
+export const ExperienceSkills = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  return (
+    <section
+      ref={containerRef}
+      id='experience'
+      className='relative min-h-screen w-full overflow-hidden bg-[#0b0b0d] px-6 py-24 md:px-12'
+    >
+      {/* Background Decor */}
+      <div className='pointer-events-none absolute left-[-10%] top-[20%] h-[600px] w-[600px] rounded-full bg-indigo-900/10 blur-[120px]' />
+
+      <div className='relative z-10 mx-auto grid max-w-6xl grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-12'>
+        {/* --- KOLOM KIRI: EXPERIENCE (Timeline) --- */}
+        <div className='lg:col-span-7'>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className='mb-10 flex items-center gap-3'
+          >
+            <Briefcase className='h-6 w-6 text-blue-500' />
+            <h2 className='font-elgocAlt text-3xl font-bold text-white md:text-4xl'>
+              Professional Journey
+            </h2>
+          </motion.div>
+
+          <div className='space-y-8 border-l-0 border-white/5 md:border-l md:pl-4'>
+            {experiences.map((exp, i) => (
+              <ExperienceCard key={i} exp={exp} index={i} />
+            ))}
+          </div>
+        </div>
+
+        {/* --- KOLOM KANAN: SKILLS (Arsenal) --- */}
+        <div className='lg:col-span-5'>
+          <div className='sticky top-24'>
+            {' '}
+            {/* Sticky agar ikut scroll */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className='mb-8 flex items-center gap-3'
+            >
+              <Cpu className='h-6 w-6 text-purple-500' />
+              <h2 className='font-elgocAlt text-3xl font-bold text-white md:text-4xl'>
+                Tech Arsenal
+              </h2>
+            </motion.div>
+            {/* 1. Core Languages */}
+            <div className='mb-10'>
+              <h3 className='mb-4 border-b border-white/10 pb-2 font-mono text-sm uppercase tracking-widest text-gray-500'>
+                Core Languages
+              </h3>
+              <div className='space-y-4'>
+                {skills.languages.map((skill, i) => (
+                  <motion.div
+                    key={skill.name}
+                    initial={{ width: 0, opacity: 0 }}
+                    whileInView={{ width: '100%', opacity: 1 }}
+                    transition={{ delay: i * 0.1, duration: 0.8 }}
+                    className='group'
+                  >
+                    <div className='mb-1 flex justify-between text-sm'>
+                      <span className='font-medium text-white'>
+                        {skill.name}
+                      </span>
+                      <span className='text-gray-500'>{skill.level * 20}%</span>
+                    </div>
+                    <div className='h-2 w-full overflow-hidden rounded-full bg-white/5'>
+                      <motion.div
+                        className='h-full rounded-full bg-gradient-to-r from-blue-600 to-purple-600'
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${skill.level * 20}%` }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1, delay: 0.2 }}
+                      />
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+            {/* 2. Frameworks & Tools */}
+            <div>
+              <h3 className='mb-4 border-b border-white/10 pb-2 font-mono text-sm uppercase tracking-widest text-gray-500'>
+                Frameworks & Tools
+              </h3>
+              <div className='flex flex-wrap gap-2'>
+                {[...skills.frameworks, ...skills.tools].map((item, i) => (
+                  <motion.span
+                    key={item}
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    transition={{ delay: i * 0.05, type: 'spring' }}
+                    viewport={{ once: true }}
+                    className='cursor-default rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-gray-300 transition-all hover:border-purple-500/50 hover:bg-purple-500/10 hover:text-white'
+                  >
+                    {item}
+                  </motion.span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
