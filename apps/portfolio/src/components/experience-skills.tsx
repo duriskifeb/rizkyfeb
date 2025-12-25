@@ -4,59 +4,44 @@ import Image from 'next/image';
 
 import React, { useRef } from 'react';
 
-import {
-  motion,
-  useMotionTemplate,
-  useMotionValue,
-  useScroll,
-  useTransform,
-} from 'framer-motion';
+import { motion, useMotionTemplate, useMotionValue, useScroll, useTransform } from 'framer-motion';
 
-import {
-  Briefcase,
-  Code2,
-  Cpu,
-  FileText,
-  Globe,
-  MessageCircle,
-  Presentation,
-  Twitter,
-  Video,
-} from 'lucide-react';
+import { Briefcase, Code2, Cpu, FileText, Globe, MessageCircle, Presentation, Twitter, Video } from 'lucide-react';
+
 
 // --- DATA EXPERIENCE (Disesuaikan untuk Mahasiswa/Junior) ---
 const experiences = [
   {
-    company: 'Freelance Developer',
-    role: 'Full Stack Developer',
-    period: 'Jan 2024 - Present',
-    location: 'Remote',
+    company: 'Unity Computer',
+    role: 'IT, Technical Support, Customer Service',
+    period: 'Mar 2022 - Dec 2023',
+    location: 'Pandaan, East Java, Indonesia · On-site',
     description:
-      'Developing custom websites and mobile applications for various clients. Focusing on clean architecture and scalable backend solutions.',
-    highlight: '5+ Happy Clients',
-    tech: ['Flutter', 'Laravel', 'React'],
+      'Provided technical support and maintenance services for laptops, printers, and other computer peripherals. Assisted customers in troubleshooting hardware and software issues.',
+    highlight: 'Service Laptop and Printer for 50+ Customers',
+    tech: ['Windows OS', 'Hardware Troubleshooting', 'Customer Service'],
     links: [],
   },
   {
-    company: 'Telkom University',
-    role: 'Lab Assistant (RPL)',
-    period: 'Aug 2023 - Dec 2023',
+    company: 'Telkom University Surabaya',
+    role: 'course practicum assistant',
+    period: '2024 - 2025',
     location: 'Surabaya, Indonesia',
     description:
-      'Mentored junior students in Algorithms & Data Structures. Assisted lecturers in grading and practical exams.',
+      'Mentoring junior students in basic object-oriented programming courses. Assisting lecturers in grading and conducting practical exams.',
     highlight: 'Mentored 30+ Students',
-    tech: ['C++', 'Java', 'Python'],
+    tech: ['Java OOP', 'mysql', 'Git', ''],
     links: [],
   },
   {
-    company: 'Tech Startup (Intern)',
-    role: 'Mobile Dev Intern',
-    period: 'May 2023 - Aug 2023',
-    location: 'Hybrid',
+    company: 'Telkom University Surabaya',
+    role: 'Lab Assistant Software Engineering (SWENG)',
+    period: '2025 - Present',
+    location: 'Lab Campus Telkom University Surabaya',
     description:
-      'Collaborated with the engineering team to fix bugs and implement new UI features for the main product app.',
-    highlight: 'Fixed 20+ Critical Bugs',
-    tech: ['Flutter', 'Firebase'],
+      'Assisting students in understanding software engineering concepts and practices. Providing support during lab sessions and helping with project development.',
+    highlight: 'Assisted in Software Engineering Labs',
+    tech: ['Java', 'Maintenance', 'Service'],
     links: [],
   },
 ];
@@ -86,7 +71,6 @@ const skills = {
     'Postman',
     'VS Code',
     'Android Studio',
-    'Docker',
   ],
 };
 
