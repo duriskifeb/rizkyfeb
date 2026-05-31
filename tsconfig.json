@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    /* Language & Environment */
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "ES2022",
+      "ES2023"
+    ],
+    "jsx": "preserve",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    /* Strict */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    /* JavaScript Support */
+    "allowJs": true,
+    "checkJs": true,
+    "resolveJsonModule": true,
+    /* Emit */
+    "noEmit": true,
+    "isolatedModules": true,
+    "incremental": true,
+    /* Plugins */
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    /* Path Aliases */
+    "baseUrl": ".",
+    "paths": {
+      "~/*": [
+        "./src/*"
+      ]
+    },
+    "skipLibCheck": true,
+    "esModuleInterop": true
+  },
+  "include": [
+    "svgr.d.ts",
+    ".eslintrc.cjs",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.cjs",
+    "**/*.js",
+    ".next/types/**/*.ts",
+    "src/components/blogs/index.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
