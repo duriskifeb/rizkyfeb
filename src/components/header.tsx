@@ -1,7 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useLenis } from 'lenis/react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 // ─── Static particle data (deterministic — no hydration mismatch) ─────────────
 const PARTICLES = Array.from({ length: 60 }, (_, i) => ({
@@ -15,8 +16,6 @@ const PARTICLES = Array.from({ length: 60 }, (_, i) => ({
 }));
 
 export const Header = () => {
-  const lenis = useLenis();
-
   return (
     <section
       id='home'
@@ -51,7 +50,7 @@ export const Header = () => {
       <span className='pointer-events-none absolute bottom-32 left-1/4 select-none text-2xl text-white/10'>✦</span>
 
       {/* ── Main Content ── */}
-      <div className='relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center text-center'>
+      <div className='relative z-10 mx-auto flex w-full flex-col items-center text-center'>
 
         {/* Badge */}
         <motion.div
@@ -68,13 +67,13 @@ export const Header = () => {
         </motion.div>
 
         {/* ── Marquee Background & Image Placeholder ── */}
-        <div className='relative flex min-h-[300px] w-full items-center justify-center overflow-hidden py-10 md:min-h-[400px]'>
-          
+        <div className='relative flex min-h-[300px] w-[calc(100%+2rem)] -mx-4 items-center justify-center overflow-hidden py-10 md:min-h-[400px]'>
+
           {/* Background Marquee Text */}
           <div className='absolute inset-0 z-0 flex flex-col justify-center gap-2 md:gap-4'>
             {/* Top row - scrolls RIGHT (marquee-reverse) */}
             <div className='flex w-max animate-marquee-reverse select-none whitespace-nowrap opacity-20'>
-              {Array(15)
+              {Array(20)
                 .fill('duriskifeb')
                 .map((text, i) => (
                   <span
@@ -85,10 +84,10 @@ export const Header = () => {
                   </span>
                 ))}
             </div>
-            
+
             {/* Bottom row - scrolls LEFT (marquee) */}
             <div className='flex w-max animate-marquee select-none whitespace-nowrap opacity-20'>
-              {Array(15)
+              {Array(20)
                 .fill('duriskifeb')
                 .map((text, i) => (
                   <span
@@ -108,8 +107,13 @@ export const Header = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
             className='relative z-10 flex h-64 w-48 flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-white/10 bg-white/5 shadow-2xl backdrop-blur-md transition-transform hover:scale-105 hover:border-emerald-400/30 md:h-80 md:w-60'
           >
-            {/* PLACEHOLDER: Nanti kamu bisa ganti dengan <Image src="/path/gambar.jpg" fill className="object-cover" alt="Profile" /> */}
-            <span className='font-mono text-xs text-white/40'>[ Image Placeholder ]</span>
+            <Image
+              src="/images/homepage.png"
+              fill
+              className="object-cover"
+              alt="Profile"
+              priority
+            />
           </motion.div>
         </div>
 
@@ -130,20 +134,18 @@ export const Header = () => {
           transition={{ duration: 0.6, delay: 0.35 }}
           className='flex flex-wrap items-center justify-center gap-3'
         >
-          <button
-            onClick={() => lenis?.scrollTo('#experience')}
-            type='button'
+          <Link
+            href="/experience"
             className='rounded-full border border-white/18 bg-white/8 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/15 active:scale-95'
           >
             View My Work
-          </button>
-          <button
-            onClick={() => lenis?.scrollTo('#contact')}
-            type='button'
+          </Link>
+          <Link
+            href="/gallery"
             className='rounded-full bg-white px-7 py-3.5 text-sm font-bold text-[#024538] shadow-[0_0_30px_rgba(255,255,255,0.2)] transition-all hover:bg-white/90 active:scale-95'
           >
-            Get In Touch
-          </button>
+            Gallery Me
+          </Link>
         </motion.div>
       </div>
 

@@ -4,7 +4,7 @@ import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata } from 'next';
 import { Footer, Navbar } from '~/components';
-import { QueryProvider, SmoothScroll } from '~/providers';
+import { QueryProvider } from '~/providers';
 import '~/styles/globals.css';
 
 import { GrainEffect } from '~/components/grain-effect';
@@ -120,7 +120,6 @@ export default function RootLayout({
         ].join(' ')}
       >
         <QueryProvider>
-          <SmoothScroll>
             <GrainEffect />
             <Navbar />
             <main className='flex min-h-screen flex-col'>
@@ -129,7 +128,6 @@ export default function RootLayout({
               </div>
               <Footer />
             </main>
-          </SmoothScroll>
           <Toaster />
         </QueryProvider>
 

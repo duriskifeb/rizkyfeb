@@ -37,14 +37,7 @@ export const Navbar = () => {
           } max-w-[640px]`}
       >
         <div className='flex items-center justify-between gap-3 rounded-full border border-white/10 bg-white/10 px-5 py-2.5 backdrop-blur-xl shadow-[0_4px_24px_rgba(0,0,0,0.2)]'>
-          {/* Logo */}
-          <Link
-            href="/"
-            onClick={closeMenu}
-            className='shrink-0 font-black text-sm tracking-wider text-white hover:text-emerald-300 transition-colors'
-          >
-            duriskifeb
-          </Link>
+          {/* Logo removed */}
 
           {/* Desktop links */}
           <div className='hidden md:flex items-center gap-0.5'>
