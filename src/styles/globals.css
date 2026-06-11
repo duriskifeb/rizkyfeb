@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @layer base {
+  /* ── DARK MODE (default / :root) ── */
   :root {
     --background: #024538;
     --foreground: #ffffff;
@@ -24,43 +25,240 @@
     --input: rgba(255,255,255,0.1);
     --ring: rgba(255,255,255,0);
     --radius: 0.5rem;
+
+    /* ── Section backgrounds ── */
+    --section-bg: #024538;
+    --section-bg-alt: #033D2D;
+
+    /* ── Navbar ── */
+    --navbar-bg: rgba(2,69,56,0.65);
+    --navbar-border: rgba(255,255,255,0.1);
+    --navbar-text: rgba(255,255,255,0.55);
+    --navbar-text-active: #ffffff;
+    --navbar-item-active-bg: rgba(255,255,255,0.15);
+    --navbar-item-hover-bg: rgba(255,255,255,0.08);
+
+    /* ── Cards / Borders ── */
+    --card-border: rgba(255,255,255,0.1);
+    --card-bg: rgba(255,255,255,0.03);
+    --card-bg-hover: rgba(255,255,255,0.06);
+    --card-bg-solid: #033D2D;
+
+    /* ── Text ── */
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255,255,255,0.55);
+    --text-muted: rgba(255,255,255,0.35);
+    --text-heading: #ffffff;
+
+    /* ── Scrollbar ── */
+    --scrollbar-thumb: rgba(255,255,255,0.2);
+    --scrollbar-thumb-hover: rgba(255,255,255,0.35);
+
+    /* ── Glow / Particle ── */
+    --glow-primary: rgba(16,185,129,0.08);
+    --glow-secondary: rgba(20,184,166,0.1);
+    --particle-color: #6ee7b7;
+
+    /* ── Footer ── */
+    --footer-bg: #011f18;
+    --footer-border: rgba(255,255,255,0.06);
   }
 
-  .dark {
-    --background: #024538;
-    --foreground: #ffffff;
-    --card: #033D2D;
-    --card-foreground: #ffffff;
-    --popover: #033D2D;
-    --popover-foreground: #ffffff;
-    --primary: #ffffff;
-    --primary-foreground: #024538;
-    --secondary: #065544;
-    --secondary-foreground: #ffffff;
-    --muted: #065544;
-    --muted-foreground: rgba(255,255,255,0.5);
-    --accent: #065544;
-    --accent-foreground: #ffffff;
-    --destructive: hsl(0 62.8% 30.6%);
+  /* ── LIGHT MODE ── applied when html has class="light" */
+  .light {
+    --background: #e6f7ef;
+    --foreground: #051209;
+    --card: #ceeedd;
+    --card-foreground: #051209;
+    --popover: #ceeedd;
+    --popover-foreground: #051209;
+    --primary: #013a2e;
+    --primary-foreground: #ffffff;
+    --secondary: #a8dfbf;
+    --secondary-foreground: #013a2e;
+    --muted: #b8e5cc;
+    --muted-foreground: rgba(5,18,9,0.65);
+    --accent: #94d9b0;
+    --accent-foreground: #013a2e;
+    --destructive: hsl(0 84.2% 60.2%);
     --destructive-foreground: hsl(0 0% 98%);
-    --border: rgba(255,255,255,0.1);
-    --input: rgba(255,255,255,0.1);
-    --ring: rgba(255,255,255,0);
+    --border: rgba(1,58,46,0.2);
+    --input: rgba(1,58,46,0.15);
+    --ring: rgba(1,58,46,0.3);
+
+    /* ── Section backgrounds ── */
+    --section-bg: #e6f7ef;
+    --section-bg-alt: #ceeedd;
+
+    /* ── Navbar ── */
+    --navbar-bg: rgba(200,240,220,0.88);
+    --navbar-border: rgba(1,58,46,0.2);
+    --navbar-text: rgba(5,18,9,0.65);
+    --navbar-text-active: #013a2e;
+    --navbar-item-active-bg: rgba(1,58,46,0.12);
+    --navbar-item-hover-bg: rgba(1,58,46,0.07);
+
+    /* ── Cards / Borders ── */
+    --card-border: rgba(1,58,46,0.18);
+    --card-bg: rgba(1,58,46,0.07);
+    --card-bg-hover: rgba(1,58,46,0.12);
+    --card-bg-solid: #c4e8d4;
+
+    /* ── Text ── */
+    --text-primary: #051209;
+    --text-secondary: #1a4a30;
+    --text-muted: #336649;
+    --text-heading: #013a2e;
+
+    /* ── Scrollbar ── */
+    --scrollbar-thumb: rgba(1,58,46,0.25);
+    --scrollbar-thumb-hover: rgba(1,58,46,0.4);
+
+    /* ── Glow / Particle ── */
+    --glow-primary: rgba(16,185,129,0.15);
+    --glow-secondary: rgba(20,184,166,0.12);
+    --particle-color: #047857;
+
+    /* ── Footer ── */
+    --footer-bg: #c4e8d4;
+    --footer-border: rgba(1,58,46,0.15);
   }
 }
-
 
 @layer base {
   html {
     @apply m-0 h-full w-full p-0;
   }
   * {
-    @apply dark box-border border-border;
+    @apply box-border border-border;
   }
   body {
     @apply m-0 h-full w-full bg-background p-0 text-foreground;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
+
+/* ── Theme transitions ── */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color, opacity;
+  transition-duration: 250ms;
+  transition-timing-function: ease;
+}
+[class*="animate-"],
+.grain-effect {
+  transition: none !important;
+}
+
+/* ════════════════════════════════════════════
+   LIGHT MODE — GLOBAL OVERRIDES
+   Fix hardcoded Tailwind white/gray classes
+   ════════════════════════════════════════════ */
+
+/* ── Navbar brand logo ── */
+.navbar-logo {
+  color: #ffffff;  /* dark mode: white */
+}
+.light .navbar-logo {
+  color: #059669 !important;  /* light mode: emerald-600, vivid & readable */
+}
+
+/* ── Theme Toggle Icons inside knob ── */
+.theme-toggle-icon {
+  color: #ffffff !important;
+}
+
+/* Headings & strong text */
+.light h1, .light h2, .light h3, .light h4, .light h5, .light h6 {
+  color: var(--text-heading) !important;
+}
+
+/* White text → dark */
+.light [class*="text-white"] {
+  color: var(--text-primary) !important;
+}
+
+/* Gray text → readable dark green shades */
+.light .text-gray-300 { color: var(--text-secondary) !important; }
+.light .text-gray-400 { color: var(--text-secondary) !important; }
+.light .text-gray-500 { color: var(--text-muted) !important; }
+.light .text-gray-600 { color: var(--text-muted) !important; }
+
+/* White/transparent backgrounds → green tint */
+.light [class*="bg-white\/"] {
+  background-color: rgba(1,58,46,0.07) !important;
+}
+.light [class*="bg-black\/"] {
+  background-color: rgba(1,58,46,0.06) !important;
+}
+
+/* White/transparent borders → visible green */
+.light [class*="border-white\/"] {
+  border-color: rgba(1,58,46,0.2) !important;
+}
+
+/* Specific dark section backgrounds → light */
+.light [class*="bg-\[#024538\]"],
+.light [class*="bg-\[#033D2D\]"],
+.light [class*="bg-\[#011f18\]"] {
+  background-color: var(--section-bg) !important;
+}
+
+/* Timeline dot bg in experience */
+.light .bg-\[#024538\] {
+  background-color: var(--section-bg) !important;
+}
+
+/* Emerald / teal / green text — keep brand accent colors */
+.light [class*="text-emerald-"] { color: unset !important; }
+.light [class*="text-teal-"]   { color: unset !important; }
+.light [class*="text-green-"]  { color: unset !important; }
+.light .text-emerald-400 { color: #059669 !important; }
+.light .text-emerald-300 { color: #047857 !important; }
+.light .text-emerald-500 { color: #047857 !important; }
+.light .text-green-400   { color: #16a34a !important; }
+.light .text-green-500   { color: #15803d !important; }
+
+/* Badge / pill text that uses opacity variants */
+.light .text-white\/40,
+.light .text-white\/50,
+.light .text-white\/55,
+.light .text-white\/60,
+.light .text-white\/65,
+.light .text-white\/70 {
+  color: var(--text-muted) !important;
+}
+
+/* Keep white text on dark-bg buttons */
+.light .bg-white { background-color: #edf9f4 !important; }
+.light .bg-white * { color: #051209 !important; }
+/* "Gallery Me" / CTA button with [#024538] text should stay dark on light bg */
+.light .text-\[\#024538\] { color: #013a2e !important; }
+
+/* Gradient text stays readable */
+.light .bg-gradient-to-r.bg-clip-text.text-transparent {
+  /* keep gradient text as-is */
+  color: transparent !important;
+}
+
+/* Cards with solid white bg → off-white in light mode */
+.light .bg-white {
+  background-color: #f0fdf8 !important;
+  color: #051209 !important;
+}
+.light .text-black { color: #051209 !important; }
+
+/* Font mono / code backgrounds */
+.light code,
+.light [class*="font-mono"] {
+  color: var(--text-primary) !important;
+}
+.light .bg-emerald-400\/10,
+.light .bg-emerald-500\/10,
+.light .bg-emerald-500\/12 {
+  background-color: rgba(5,150,105,0.12) !important;
+}
+
+
 
 @keyframes grainEffect {
   0% {
@@ -117,14 +315,7 @@
   bottom: auto;
   width: 100%;
   height: 20vh;
-  background-image: -webkit-gradient(
-    linear,
-    left top,
-    left bottom,
-    from(#0c0c0e),
-    to(rgba(12, 12, 18, 0))
-  );
-  background-image: linear-gradient(180deg, #0c0c0e, rgba(12, 12, 18, 0));
+  background-image: linear-gradient(180deg, var(--section-bg), transparent);
 }
 
 .carousel-grad-top {
@@ -137,14 +328,7 @@
   right: 0%;
   bottom: 0%;
   height: 20vh;
-  background-image: -webkit-gradient(
-    linear,
-    left bottom,
-    left top,
-    from(#0c0c0e),
-    to(rgba(12, 12, 18, 0))
-  );
-  background-image: linear-gradient(0deg, #0c0c0e, rgba(12, 12, 18, 0));
+  background-image: linear-gradient(0deg, var(--section-bg), transparent);
 }
 
 /* Custom scrollbar styles */
@@ -157,10 +341,10 @@
 }
 
 .overflow-y-auto::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--scrollbar-thumb);
   border-radius: 3px;
 }
 
 .overflow-y-auto::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: var(--scrollbar-thumb-hover);
 }

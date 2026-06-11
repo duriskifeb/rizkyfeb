@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
 
 import { data } from '~/lib/data';
 
@@ -12,11 +13,14 @@ import {
   ChevronLeft,
   ChevronRight,
   Copy,
-  Download,
-  FileText,
   Mail,
   X,
 } from 'lucide-react';
+
+const Lanyard3D = dynamic(
+  () => import('~/components/lanyard-3d').then((m) => m.Lanyard3D),
+  { ssr: false, loading: () => <div className='h-full w-full animate-pulse rounded-3xl bg-white/5' /> },
+);
 
 // --- DATA EXPERIENCE ---
 const experiences = [
@@ -75,7 +79,7 @@ const experiences = [
 // --- CARD COMPONENT ---
 const ExperienceCard = ({
   exp,
-  index,
+  index: _index,
 }: {
   exp: (typeof experiences)[0];
   index: number;
@@ -173,9 +177,8 @@ export const ExperienceSkills = () => {
     <section
       ref={containerRef}
       id='experience'
-      // FIX 1: HAPUS 'overflow-hidden' DI SINI.
-      // Jika konten memanjang ke bawah, biarkan halaman ikut memanjang (scrollable).
-      className='relative w-full bg-[#024538] px-6 py-24 md:px-12'
+      className='relative w-full px-6 py-24 md:px-12'
+      style={{ background: 'var(--section-bg)' }}
     >
       {/* Decor */}
       <div className='pointer-events-none absolute right-[-5%] top-[20%] h-[400px] w-[400px] rounded-full bg-emerald-900/15 blur-[100px]' />
@@ -243,49 +246,38 @@ export const ExperienceSkills = () => {
           </div>
         </div>
 
-        {/* --- KOLOM KANAN: RESUME CARD --- */}
-        {/* FIX 2: Tambahkan 'lg:sticky lg:top-24' agar Resume Card tetap terlihat saat scroll daftar Experience yang panjang */}
+        {/* --- KOLOM KANAN: LANYARD 3D --- */}
         <div className='relative z-20 flex h-full flex-col lg:sticky lg:top-24 lg:self-start'>
-          <div className='mb-8 flex items-center gap-3'>
-            <div className='rounded-lg border border-white/10 bg-white/5 p-2'>
-              <FileText className='h-6 w-6 text-purple-400' />
+          {/* Header */}
+          <div className='mb-4 flex items-center justify-between'>
+            <div className='flex items-center gap-3'>
+              <div className='rounded-lg border border-white/10 bg-white/5 p-2'>
+                <span className='block h-6 w-6 text-center text-lg leading-6'>🪪</span>
+              </div>
+              <h2 className='font-elgocAlt text-3xl font-bold text-white md:text-4xl'>
+                My Badge
+              </h2>
             </div>
-            <h2 className='font-elgocAlt text-3xl font-bold text-white md:text-4xl'>
-              My Resume
-            </h2>
+            <button
+              onClick={() => setShowRequestModal(true)}
+              className='rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-gray-300 transition-all hover:bg-white/10 hover:text-white'
+            >
+              Request CV
+            </button>
           </div>
 
-          <div className='group relative flex min-h-[450px] flex-1 flex-col items-center justify-center overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] p-10 text-center transition-all duration-500 hover:bg-white/[0.04]'>
-            <div
-              className='absolute inset-0 opacity-[0.03]'
-              style={{
-                backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)',
-                backgroundSize: '24px 24px',
-              }}
+          {/* Lanyard canvas container */}
+          <div className='relative flex-1 overflow-hidden rounded-3xl border border-white/10 bg-transparent' style={{ minHeight: '520px' }}>
+            <Lanyard3D
+              position={[0, 0, 30]}
+              gravity={[0, -40, 0]}
+              fov={20}
+              transparent={true}
             />
-            <div className='relative z-10 mb-8'>
-              <div className='mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500/20 to-teal-500/20 text-white shadow-[0_0_30px_rgba(16,185,129,0.15)] transition-transform duration-500 group-hover:scale-110'>
-                <Download className='h-10 w-10' />
-              </div>
-              <h3 className='mb-4 font-elgocAlt text-4xl font-bold text-white'>
-                Download CV
-              </h3>
-              <p className='mx-auto max-w-sm text-base leading-relaxed text-gray-400'>
-                Get a detailed overview of my academic background, technical
-                skills, and project history in a professional PDF format.
-              </p>
-            </div>
-            <div className='relative z-10 w-full max-w-xs'>
-              <button
-                onClick={() => setShowRequestModal(true)}
-                className='flex w-full items-center justify-center gap-2 rounded-xl bg-white px-6 py-4 text-base font-bold text-black shadow-lg shadow-white/5 transition-all hover:scale-[1.02] hover:bg-gray-200 active:scale-[0.98]'
-              >
-                Request Access
-              </button>
-              <p className='mt-5 font-mono text-xs uppercase tracking-widest text-gray-600'>
-                Last Updated: December 2025
-              </p>
-            </div>
+            {/* Hint */}
+            <p className='absolute bottom-4 left-1/2 -translate-x-1/2 select-none font-mono text-[10px] uppercase tracking-[0.25em] text-white/20'>
+              drag the badge
+            </p>
           </div>
         </div>
       </div>
@@ -302,7 +294,11 @@ export const ExperienceSkills = () => {
               exit={{ opacity: 0 }}
             />
             <motion.div
-              className='fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-white/10 bg-[#033D2D] p-8 shadow-2xl'
+              className='fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-2xl p-8 shadow-2xl'
+              style={{
+                border: '1px solid var(--card-border)',
+                background: 'var(--card-bg-solid)',
+              }}
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}

@@ -17,10 +17,16 @@ const socialLinks = [
 
 export const Footer = () => {
   return (
-    <div className='relative z-[2] flex min-h-[8dvh] flex-col items-center justify-between gap-4 border-t border-white/8 bg-[#024538] px-4 py-6 sm:flex-row sm:px-6'>
+    <div
+      className='relative z-[2] flex min-h-[8dvh] flex-col items-center justify-between gap-4 px-4 py-6 sm:flex-row sm:px-6'
+      style={{
+        background: 'var(--footer-bg)',
+        borderTop: '1px solid var(--footer-border)',
+      }}
+    >
       <div className='flex items-center gap-3'>
-        <BinaryIcon size='1.5rem' className='text-white/60' />
-        <span className='font-beatriceMedium text-sm text-white/40'>
+        <BinaryIcon size='1.5rem' style={{ color: 'var(--text-muted)' }} />
+        <span className='font-beatriceMedium text-sm' style={{ color: 'var(--text-muted)' }}>
           © {new Date().getFullYear()} M Rizky Febriyanto
         </span>
       </div>
@@ -35,7 +41,11 @@ export const Footer = () => {
                 href={social.href}
                 target='_blank'
                 rel='noopener noreferrer'
-                className='group relative rounded-lg border border-white/5 bg-white/[0.03] p-2 backdrop-blur-sm transition-all duration-300 hover:border-white/15 hover:bg-white/[0.08]'
+                className='group relative rounded-lg p-2 backdrop-blur-sm transition-all duration-300'
+                style={{
+                  border: '1px solid var(--card-border)',
+                  background: 'var(--card-bg)',
+                }}
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
@@ -43,22 +53,27 @@ export const Footer = () => {
                 whileHover={{ scale: 1.1, y: -2 }}
                 aria-label={social.label}
               >
-                <Icon className='h-4 w-4 text-white/60 transition-colors group-hover:text-white' />
+                <Icon className='h-4 w-4 transition-colors' style={{ color: 'var(--text-secondary)' }} />
               </motion.a>
             );
           })}
         </div>
 
-      <Button
-          className='group flex items-center gap-2 border-white/5 bg-white/[0.03] text-sm uppercase text-white/70 backdrop-blur-sm transition-all duration-300 hover:border-white/15 hover:bg-white/[0.08] hover:text-white'
+        <Button
+          className='group flex items-center gap-2 text-sm uppercase backdrop-blur-sm transition-all duration-300'
           variant='outline'
-        onClick={() => {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }}
-      >
+          style={{
+            border: '1px solid var(--card-border)',
+            background: 'var(--card-bg)',
+            color: 'var(--text-secondary)',
+          }}
+          onClick={() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+        >
           <ArrowUp className='h-4 w-4 transition-transform group-hover:-translate-y-1' />
           Top
-      </Button>
+        </Button>
       </div>
     </div>
   );

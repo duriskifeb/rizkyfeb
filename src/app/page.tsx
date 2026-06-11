@@ -45,10 +45,10 @@ const Home = () => {
       <Header />
 
       {/* Gallery Section — Infinite Marquee */}
-      <section className='relative w-full overflow-hidden bg-[#024538] py-16'>
+      <section className='relative w-full overflow-hidden py-16' style={{ background: 'var(--section-bg)' }}>
         {/* Fade top & bottom */}
-        <div className='pointer-events-none absolute inset-x-0 top-0 z-10 h-20 bg-gradient-to-b from-[#024538] to-transparent' />
-        <div className='pointer-events-none absolute inset-x-0 bottom-0 z-10 h-20 bg-gradient-to-t from-[#024538] to-transparent' />
+        <div className='pointer-events-none absolute inset-x-0 top-0 z-10 h-20' style={{ background: 'linear-gradient(to bottom, var(--section-bg), transparent)' }} />
+        <div className='pointer-events-none absolute inset-x-0 bottom-0 z-10 h-20' style={{ background: 'linear-gradient(to top, var(--section-bg), transparent)' }} />
 
         <div className='mb-10 text-center'>
           <div className='mb-3 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-emerald-400'>

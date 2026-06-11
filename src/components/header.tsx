@@ -19,15 +19,17 @@ export const Header = () => {
   return (
     <section
       id='home'
-      className='relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-[#024538] px-4 pt-28 pb-24'
+      className='relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden px-4 pt-28 pb-24'
+      style={{ background: 'var(--section-bg)' }}
     >
       {/* ── CSS Particle Field ── */}
       <div className='pointer-events-none absolute inset-0 z-0 overflow-hidden'>
         {PARTICLES.map((p) => (
           <div
             key={p.id}
-            className='absolute rounded-full bg-emerald-300 animate-particle-float'
+            className='absolute rounded-full animate-particle-float'
             style={{
+              background: 'var(--particle-color)',
               width: p.size,
               height: p.size,
               left: `${p.x}%`,
@@ -147,16 +149,6 @@ export const Header = () => {
             Gallery Me
           </Link>
         </motion.div>
-      </div>
-
-      {/* ── Scroll indicator ── */}
-      <div className='absolute bottom-10 left-1/2 z-20 flex -translate-x-1/2 animate-bounce flex-col items-center gap-2 opacity-35'>
-        <span className='font-mono text-[9px] uppercase tracking-[0.3em] text-white/50'>
-          Scroll
-        </span>
-        <div className='flex h-8 w-5 justify-center rounded-full border border-white/20 bg-white/5 pt-1.5'>
-          <div className='h-1.5 w-0.5 animate-pulse rounded-full bg-white/60' />
-        </div>
       </div>
     </section>
   );

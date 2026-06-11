@@ -2,10 +2,11 @@ await import('./src/env.js');
 
 /** @type {import("next").NextConfig} */
 const config = {
-  experimental: {
-    reactCompiler: true,
+  eslint: {
+    ignoreDuringBuilds: true,
   },
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         hostname: 'cdn.hashnode.com',

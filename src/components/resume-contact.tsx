@@ -13,7 +13,6 @@ import {
   Github,
   Instagram,
   Linkedin,
-  Mail,
   MessageCircle,
 } from 'lucide-react';
 
@@ -33,22 +32,29 @@ const SocialLink = ({
     href={href}
     target='_blank'
     rel='noopener noreferrer'
-    className='group flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.02] p-4 transition-all duration-300 hover:border-white/10 hover:bg-white/[0.05] hover:shadow-lg'
+    className='group flex items-center justify-between rounded-xl p-4 transition-all duration-300 hover:shadow-lg'
+    style={{
+      border: '1px solid var(--card-border)',
+      background: 'var(--card-bg)',
+    }}
   >
     <div className='flex items-center gap-3'>
-      <div className='flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-gray-400 transition-colors group-hover:bg-white/10 group-hover:text-white'>
+      <div
+        className='flex h-10 w-10 items-center justify-center rounded-full transition-colors'
+        style={{ background: 'var(--card-bg)', color: 'var(--text-secondary)' }}
+      >
         {icon}
       </div>
       <div className='flex flex-col text-left'>
-        <span className='text-xs font-medium uppercase tracking-wider text-gray-500'>
+        <span className='text-xs font-medium uppercase tracking-wider' style={{ color: 'var(--text-muted)' }}>
           {label}
         </span>
-        <span className='font-mono text-sm text-gray-300 transition-colors group-hover:text-white'>
+        <span className='font-mono text-sm transition-colors' style={{ color: 'var(--text-secondary)' }}>
           {username}
         </span>
       </div>
     </div>
-    <ArrowUpRight className='h-5 w-5 text-gray-600 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white' />
+    <ArrowUpRight className='h-5 w-5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5' style={{ color: 'var(--text-muted)' }} />
   </a>
 );
 
@@ -70,7 +76,8 @@ export const ResumeContact = () => {
     <section
       ref={containerRef}
       id='contact'
-      className='relative flex min-h-[80vh] w-full items-center justify-center overflow-hidden bg-[#024538] px-6 py-24 md:px-12'
+      className='relative flex min-h-[80vh] w-full items-center justify-center overflow-hidden px-6 py-24 md:px-12'
+      style={{ background: 'var(--section-bg)' }}
     >
       {/* 1. Background Decor (Aurora Glow Halus) */}
       <div className='pointer-events-none absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 opacity-30'>
@@ -87,7 +94,7 @@ export const ResumeContact = () => {
           className='mb-12 text-center'
         >
           <h2 className='mb-4 font-elgocAlt text-5xl font-bold leading-tight text-white md:text-6xl lg:text-7xl'>
-            Let's start a <br />
+            Let&apos;s start a <br />
             <span className='bg-gradient-to-r from-emerald-400 via-teal-300 to-white bg-clip-text text-transparent'>
               conversation.
             </span>
@@ -104,7 +111,11 @@ export const ResumeContact = () => {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className='overflow-hidden rounded-3xl border border-white/10 bg-[#033D2D]/80 backdrop-blur-xl'
+          className='overflow-hidden rounded-3xl backdrop-blur-xl'
+          style={{
+            border: '1px solid var(--card-border)',
+            background: 'var(--card-bg-solid)',
+          }}
         >
           <div className='grid grid-cols-1 md:grid-cols-2'>
             {/* KIRI: Email Action Area */}

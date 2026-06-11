@@ -6,4 +6,4 @@ export * from './resume-contact';
 export * from './footer';
 export * from './experience-skills';
 export * from './scroll-to-top';
-export * from './DomeGallery';
+export * from './dome-gallery';

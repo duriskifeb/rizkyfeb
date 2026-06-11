@@ -75,7 +75,11 @@ const StatCard = ({
       viewport={{ once: true }}
       transition={{ delay: index * 0.1, duration: 0.5 }}
       onMouseMove={handleMouseMove}
-      className='group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5 transition-all duration-300 hover:border-emerald-400/30 hover:bg-white/8 hover:shadow-[0_0_30px_rgba(16,185,129,0.1)]'
+      className='group relative overflow-hidden rounded-2xl p-5 transition-all duration-300 hover:shadow-[0_0_30px_rgba(16,185,129,0.1)]'
+      style={{
+        border: '1px solid var(--card-border)',
+        background: 'var(--card-bg)',
+      }}
     >
       {/* Mouse spotlight */}
       <motion.div
@@ -118,7 +122,8 @@ export const AboutAchievements = () => {
     <section
       ref={containerRef}
       id='about'
-      className='relative flex min-h-screen w-full items-center overflow-hidden bg-[#024538] px-6 py-24 md:px-12'
+      className='relative flex min-h-screen w-full items-center overflow-hidden px-6 py-24 md:px-12'
+      style={{ background: 'var(--section-bg)' }}
     >
       {/* Background code watermark */}
       <div className='pointer-events-none absolute inset-0 select-none overflow-hidden font-mono text-xs leading-6 opacity-[0.015]'>

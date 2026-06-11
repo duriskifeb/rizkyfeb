@@ -26,9 +26,9 @@ const config = {
         'header-image': '630.6 / 209',
       },
       fontFamily: {
-        sans: ['var(--font-beatrice-regular)', 'Arial', 'sans-serif'],
-        beatriceMedium: ['var(--font-beatrice-medium)', 'Arial', 'sans-serif'],
-        elgocAlt: ['var(--font-elgocAlt)', 'Arial', 'sans-serif'],
+        sans: ['var(--font-rizky-beatrice-regular)', 'Arial', 'sans-serif'],
+        beatriceMedium: ['var(--font-rizky-beatrice-medium)', 'Arial', 'sans-serif'],
+        elgocAlt: ['var(--font-rizky-elgoc)', 'Arial', 'sans-serif'],
       },
       colors: {
         border: 'var(--border)',

@@ -29,7 +29,7 @@ const rizkyElgoc = localFont({
 });
 
 /* -----------------------------------------
-   METADATA — 100% BRANDING RIZKY
+   METADATA
 ------------------------------------------ */
 export const metadata: Metadata = {
   metadataBase: new URL('https://rizky-febriyanto.dev'),
@@ -110,7 +110,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en'>
+    <html lang='en' suppressHydrationWarning>
+      <head>
+        {/* Reads saved theme BEFORE first paint — prevents flash */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='light'){document.documentElement.classList.add('light')}else{document.documentElement.classList.remove('light')}}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body
         className={[
           '!overflow-x-hidden font-sans',
@@ -120,14 +128,12 @@ export default function RootLayout({
         ].join(' ')}
       >
         <QueryProvider>
-            <GrainEffect />
-            <Navbar />
-            <main className='flex min-h-screen flex-col'>
-              <div className='flex-1'>
-                {children}
-              </div>
-              <Footer />
-            </main>
+          <GrainEffect />
+          <Navbar />
+          <main className='flex min-h-screen flex-col'>
+            <div className='flex-1'>{children}</div>
+            <Footer />
+          </main>
           <Toaster />
         </QueryProvider>
 
