@@ -263,6 +263,7 @@ export function Lanyard3D({
   imageFit = 'cover',
   lanyardImage = null,
   lanyardWidth = 1,
+  cameraTarget = [0, 0, 0],
 }) {
   const [isMobile, setIsMobile] = useState(
     () => typeof window !== 'undefined' && window.innerWidth < 768,
@@ -280,9 +281,10 @@ export function Lanyard3D({
         camera={{ position, fov }}
         dpr={[1, isMobile ? 1.5 : 2]}
         gl={{ alpha: transparent }}
-        onCreated={({ gl }) =>
-          gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)
-        }
+        onCreated={({ gl, camera }) => {
+          gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1);
+          camera.lookAt(cameraTarget[0], cameraTarget[1], cameraTarget[2]);
+        }}
       >
         <ambientLight intensity={Math.PI} />
         <Physics gravity={gravity} timeStep={isMobile ? 1 / 30 : 1 / 60}>

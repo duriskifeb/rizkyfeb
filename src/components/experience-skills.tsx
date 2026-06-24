@@ -252,7 +252,7 @@ export const ExperienceSkills = () => {
           <div className='mb-4 flex items-center justify-between'>
             <div className='flex items-center gap-3'>
               <div className='rounded-lg border border-white/10 bg-white/5 p-2'>
-                <span className='block h-6 w-6 text-center text-lg leading-6'>🪪</span>
+                <span className='block h-6 w-6 text-center text-lg leading-6'>🏆</span>
               </div>
               <h2 className='font-elgocAlt text-3xl font-bold text-white md:text-4xl'>
                 My Badge
@@ -273,6 +273,8 @@ export const ExperienceSkills = () => {
               gravity={[0, -40, 0]}
               fov={20}
               transparent={true}
+              lanyardWidth={2}
+              cameraTarget={[0, -5, 0]}
             />
             {/* Hint */}
             <p className='absolute bottom-4 left-1/2 -translate-x-1/2 select-none font-mono text-[10px] uppercase tracking-[0.25em] text-white/20'>
