@@ -1,26 +1,13 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
-import dynamic from 'next/dynamic';
-
 import { data } from '~/lib/data';
-
 import { AnimatePresence, motion } from 'framer-motion';
-
 import {
   Briefcase,
-  Check,
   ChevronLeft,
   ChevronRight,
-  Copy,
-  Mail,
-  X,
 } from 'lucide-react';
-
-const Lanyard3D = dynamic(
-  () => import('~/components/lanyard-3d').then((m) => m.Lanyard3D),
-  { ssr: false, loading: () => <div className='h-full w-full animate-pulse rounded-3xl bg-white/5' /> },
-);
 
 // --- DATA EXPERIENCE ---
 const experiences = [
@@ -142,8 +129,6 @@ const ExperienceCard = ({
 
 export const ExperienceSkills = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [showRequestModal, setShowRequestModal] = useState(false);
-  const [emailCopied, setEmailCopied] = useState(false);
 
   // --- PAGINATION STATE ---
   const [currentPage, setCurrentPage] = useState(0);
@@ -163,16 +148,6 @@ export const ExperienceSkills = () => {
     if (currentPage > 0) setCurrentPage((prev) => prev - 1);
   };
 
-  const handleCopyEmail = async () => {
-    try {
-      await navigator.clipboard.writeText(data.resume.email);
-      setEmailCopied(true);
-      setTimeout(() => setEmailCopied(false), 2000);
-    } catch (err) {
-      console.error('Failed to copy email:', err);
-    }
-  };
-
   return (
     <section
       ref={containerRef}
@@ -183,8 +158,8 @@ export const ExperienceSkills = () => {
       {/* Decor */}
       <div className='pointer-events-none absolute right-[-5%] top-[20%] h-[400px] w-[400px] rounded-full bg-emerald-900/15 blur-[100px]' />
 
-      <div className='relative z-10 mx-auto grid max-w-6xl grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-20'>
-        {/* --- KOLOM KIRI: EXPERIENCE LIST (PAGINATION) --- */}
+      <div className='relative z-10 mx-auto max-w-6xl'>
+        {/* --- EXPERIENCE LIST (FULL WIDTH) --- */}
         <div className='relative z-20 flex flex-col'>
           <div className='mb-8 flex items-end justify-between'>
             {/* Bagian Kiri: Judul & Deskripsi */}
@@ -202,7 +177,7 @@ export const ExperienceSkills = () => {
               </p>
             </div>
 
-            {/* Bagian Kanan: Pagination Controls */}
+            {/* Pagination Controls */}
             <div className='flex items-center gap-2'>
               <button
                 onClick={prevPage}
@@ -245,119 +220,7 @@ export const ExperienceSkills = () => {
             </AnimatePresence>
           </div>
         </div>
-
-        {/* --- KOLOM KANAN: LANYARD 3D --- */}
-        <div className='relative z-20 flex h-full flex-col lg:sticky lg:top-24 lg:self-start'>
-          {/* Header */}
-          <div className='mb-4 flex items-center justify-between'>
-            <div className='flex items-center gap-3'>
-              <div className='rounded-lg border border-white/10 bg-white/5 p-2'>
-                <span className='block h-6 w-6 text-center text-lg leading-6'>🏆</span>
-              </div>
-              <h2 className='font-elgocAlt text-3xl font-bold text-white md:text-4xl'>
-                My Badge
-              </h2>
-            </div>
-            <button
-              onClick={() => setShowRequestModal(true)}
-              className='rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-gray-300 transition-all hover:bg-white/10 hover:text-white'
-            >
-              Request CV
-            </button>
-          </div>
-
-          {/* Lanyard canvas container */}
-          <div className='relative flex-1 overflow-hidden rounded-3xl border border-white/10 bg-transparent' style={{ minHeight: '520px' }}>
-            <Lanyard3D
-              position={[0, 0, 30]}
-              gravity={[0, -40, 0]}
-              fov={20}
-              transparent={true}
-              lanyardWidth={2}
-              cameraTarget={[0, -5, 0]}
-              frontImage="/images/Card_lanyard.png"
-              backImage="/images/Card_lanyard.png"
-              imageFit="contain"
-            />
-            {/* Hint */}
-            <p className='absolute bottom-4 left-1/2 -translate-x-1/2 select-none font-mono text-[10px] uppercase tracking-[0.25em] text-white/20'>
-              drag the badge
-            </p>
-          </div>
-        </div>
       </div>
-
-      {/* --- MODAL --- */}
-      <AnimatePresence>
-        {showRequestModal && (
-          <>
-            <motion.div
-              className='fixed inset-0 z-50 bg-black/80 backdrop-blur-sm'
-              onClick={() => setShowRequestModal(false)}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            />
-            <motion.div
-              className='fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-2xl p-8 shadow-2xl'
-              style={{
-                border: '1px solid var(--card-border)',
-                background: 'var(--card-bg-solid)',
-              }}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-            >
-              <div className='mb-8 flex items-center justify-between'>
-                <h3 className='font-elgocAlt text-2xl font-bold text-white'>
-                  Request Resume
-                </h3>
-                <button
-                  onClick={() => setShowRequestModal(false)}
-                  className='rounded-full p-2 text-white/50 transition-colors hover:bg-white/10 hover:text-white'
-                >
-                  <X className='h-6 w-6' />
-                </button>
-              </div>
-              <div className='mb-8 rounded-xl border border-white/10 bg-white/[0.03] p-5'>
-                <div className='mb-3 text-sm font-medium uppercase tracking-wider text-gray-500'>
-                  Email Address
-                </div>
-                <div className='flex items-center gap-3'>
-                  <code className='flex-1 truncate rounded bg-emerald-400/10 px-3 py-1.5 font-mono text-base text-emerald-400'>
-                    {data.resume.email}
-                  </code>
-                  <button
-                    onClick={handleCopyEmail}
-                    className='flex items-center gap-2 rounded-lg bg-white/10 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-white/20'
-                  >
-                    {emailCopied ? (
-                      <Check className='h-4 w-4' />
-                    ) : (
-                      <Copy className='h-4 w-4' />
-                    )}
-                    {emailCopied ? 'Copied' : 'Copy'}
-                  </button>
-                </div>
-              </div>
-              <div className='grid grid-cols-2 gap-4'>
-                <button
-                  onClick={() => setShowRequestModal(false)}
-                  className='rounded-xl border border-white/10 py-3.5 text-base font-medium text-gray-400 transition-colors hover:bg-white/5 hover:text-white'
-                >
-                  Cancel
-                </button>
-                <a
-                  href={`mailto:${data.resume.email}?subject=Resume Request`}
-                  className='flex items-center justify-center gap-2 rounded-xl bg-white py-3.5 text-base font-bold text-black transition-colors hover:bg-gray-200'
-                >
-                  <Mail className='h-5 w-5' /> Send Email
-                </a>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
     </section>
   );
 };
