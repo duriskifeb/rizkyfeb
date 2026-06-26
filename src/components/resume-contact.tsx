@@ -218,7 +218,6 @@ export const ResumeContact = () => {
 
           </div>
         </motion.div>
-
       </div>
     </section>
   );

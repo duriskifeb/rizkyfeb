@@ -65,7 +65,7 @@ export const Header = () => {
             <span className='absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75' />
             <span className='relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400' />
           </span>
-          Software Engineer &amp; Author
+          Software Engineer Dumb, Journaling, Reading and Writing.
         </motion.div>
 
         {/* ── Marquee Background & Image Placeholder ── */}
