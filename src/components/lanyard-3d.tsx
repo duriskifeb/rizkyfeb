@@ -107,6 +107,7 @@ function Band({
     drawImage(backTex, BACK_UV_RECT, imageFit);
 
     const t = new THREE.CanvasTexture(canvas);
+    t.flipY = false; // Prevent Three.js double-flip; we flip manually in drawImage
     t.needsUpdate = true;
     return t;
   }, [frontTex, backTex, imageFit, materials]);
@@ -196,7 +197,7 @@ function Band({
         {...segmentProps}
         type={dragged ? 'kinematicPosition' : 'dynamic'}
       >
-        <CuboidCollider args={[0.8, 1.125, 0.01]} />
+        <CuboidCollider args={[0.75, 1.25, 0.01]} />
         <group
           scale={2.25}
           position={[0, -1.2, -0.05]}
@@ -218,14 +219,7 @@ function Band({
         >
           {nodes?.card && (
             <mesh geometry={nodes.card.geometry}>
-              <meshPhysicalMaterial
-                map={texture}
-                map-anisotropy={16}
-                clearcoat={1}
-                clearcoatRoughness={0.15}
-                roughness={0.3}
-                metalness={0.5}
-              />
+              <meshBasicMaterial map={texture} />
             </mesh>
           )}
           {nodes?.clip && (
@@ -253,6 +247,19 @@ function Band({
 }
 
 // ─── Main export ──────────────────────────────────────────────────────────────
+interface Lanyard3DProps {
+  position?: [number, number, number];
+  gravity?: [number, number, number];
+  fov?: number;
+  transparent?: boolean;
+  frontImage?: string | null;
+  backImage?: string | null;
+  imageFit?: string;
+  lanyardImage?: string | null;
+  lanyardWidth?: number;
+  cameraTarget?: [number, number, number];
+}
+
 export function Lanyard3D({
   position = [0, 0, 30],
   gravity = [0, -40, 0],
@@ -264,7 +271,7 @@ export function Lanyard3D({
   lanyardImage = null,
   lanyardWidth = 1,
   cameraTarget = [0, 0, 0],
-}) {
+}: Lanyard3DProps) {
   const [isMobile, setIsMobile] = useState(
     () => typeof window !== 'undefined' && window.innerWidth < 768,
   );

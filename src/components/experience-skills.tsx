@@ -275,6 +275,9 @@ export const ExperienceSkills = () => {
               transparent={true}
               lanyardWidth={2}
               cameraTarget={[0, -5, 0]}
+              frontImage="/images/Card_lanyard.png"
+              backImage="/images/Card_lanyard.png"
+              imageFit="contain"
             />
             {/* Hint */}
             <p className='absolute bottom-4 left-1/2 -translate-x-1/2 select-none font-mono text-[10px] uppercase tracking-[0.25em] text-white/20'>
