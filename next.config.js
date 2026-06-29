@@ -1,18 +1,9 @@
-await import('./src/env.js');
-
-/** @type {import("next").NextConfig} */
-const config = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  output: 'export', // Ini wajib agar hasil build berupa folder statis (out/)
   images: {
-    unoptimized: true,
-    remotePatterns: [
-      {
-        hostname: 'cdn.hashnode.com',
-      },
-    ],
+    unoptimized: true, // Wajib, karena fitur optimizer Next.js butuh server Node.js
   },
-};
+}
 
-export default config;
+module.exports = nextConfig
