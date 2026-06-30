@@ -53,8 +53,8 @@ export const metadata: Metadata = {
   creator: 'Rizky Febriyanto',
   publisher: 'Rizky Febriyanto',
   authors: [{ name: 'Rizky Febriyanto' }],
-  manifest: '/manifest.json',
-  icons: [{ rel: 'icon', url: '/logo.png' }],
+  manifest: '/rizkyfeb/manifest.json',
+  icons: [{ rel: 'icon', url: '/rizkyfeb/logo.png' }],
 
   twitter: {
     card: 'summary_large_image',
