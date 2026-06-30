@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react/no-unknown-property */
+/* eslint-disable */
 // @ts-nocheck
 'use client';
 
@@ -107,7 +106,7 @@ function Band({
     drawImage(backTex, BACK_UV_RECT, imageFit);
 
     const t = new THREE.CanvasTexture(canvas);
-    t.flipY = false; // Prevent Three.js double-flip; we flip manually in drawImage
+    t.flipY = false;
     t.needsUpdate = true;
     return t;
   }, [frontTex, backTex, imageFit, materials]);

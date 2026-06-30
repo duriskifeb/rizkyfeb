@@ -2,7 +2,8 @@
 
 import React, { useRef } from 'react';
 
-import { cn } from '~/lib/utils';
+// Hapus import cn yang tidak digunakan
+// import { cn } from '~/lib/utils';
 
 import {
   motion,
@@ -176,7 +177,7 @@ export const AboutAchievements = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
             >
-              Hi, I'm{' '}
+              Hi, I&apos;m{' '}
               <strong className='text-white'>Muhammad Rizky Febriyanto</strong>.
               Currently a 5th&#8209;semester student majoring in{' '}
               <span className='cursor-default border-b border-emerald-500/30 pb-0.5 text-emerald-400 transition-colors hover:border-emerald-400'>
@@ -191,7 +192,7 @@ export const AboutAchievements = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
             >
-              My journey isn't just about code; it's about solving real-world
+              My journey isn&apos;t just about code; it&apos;s about solving real-world
               problems. I am{' '}
               <span className='mx-1 inline-flex items-center justify-center rounded-full border border-emerald-500/25 bg-emerald-500/12 px-3 py-0.5 align-middle text-xs font-bold text-emerald-400'>
                 active
@@ -212,7 +213,7 @@ export const AboutAchievements = () => {
               Beyond the screen, I explore new perspectives. A quote that drives me:
               <br />
               <span className='mt-3 block border-l-2 border-emerald-500/30 pl-4 italic text-white/65'>
-                "Jika tidak lebih baik, lebih baik tidak"
+                &quot;Jika tidak lebih baik, lebih baik tidak&quot;
               </span>
             </motion.p>
           </div>

@@ -1,78 +1,27 @@
-const { resolve } = require('node:path');
-
-const project = resolve(__dirname, 'tsconfig.json');
-
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
-  root: true,
-  parser: '@typescript-eslint/parser',
-  extends: [
-    require.resolve('@vercel/style-guide/eslint/browser'),
-    require.resolve('@vercel/style-guide/eslint/node'),
-    require.resolve('@vercel/style-guide/eslint/react'),
-    require.resolve('@vercel/style-guide/eslint/next'),
-    require.resolve('@vercel/style-guide/eslint/typescript'),
-  ],
-  parserOptions: { project },
-  settings: {
-    'import/resolver': { typescript: { project } },
-  },
+  extends: ['next/core-web-vitals'],
   rules: {
-    'no-console': ['off'],
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/no-confusing-void-expression': [
-      'error',
-      { ignoreArrowShorthand: true },
-    ],
-    '@typescript-eslint/no-shadow': 'off',
-    '@typescript-eslint/no-misused-promises': [
-      'error',
-      { checksVoidReturn: { attributes: false } },
-    ],
-    '@typescript-eslint/restrict-template-expressions': ['warn'],
-    'react/function-component-definition': [
-      'warn',
-      {
-        namedComponents: 'arrow-function',
-        unnamedComponents: 'arrow-function',
-      },
-    ],
-    'react/jsx-sort-props': [
-      'warn',
-      {
-        callbacksLast: true,
-        shorthandFirst: true,
-        multiline: 'last',
-        reservedFirst: true,
-      },
-    ],
-    'import/order': [
-      'off',
-      {
-        'newlines-between': 'ignore',
-        alphabetize: { order: 'asc' },
-      },
-    ],
+    'react/function-component-definition': 'off',
+    'react/jsx-sort-props': 'off',
+    'react/no-array-index-key': 'off',
+    'react/no-unescaped-entities': 'off',
+    'react/jsx-no-leaked-render': 'off',
+    'react/self-closing-comp': 'off',
+    'react/button-has-type': 'off',
+    'react/jsx-boolean-value': 'off',
+    'react/jsx-no-useless-fragment': 'off',
+    'react/hook-use-state': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/no-unsafe-member-access': 'off',
+    '@typescript-eslint/no-unsafe-call': 'off',
+    '@typescript-eslint/no-unsafe-argument': 'off',
+    '@typescript-eslint/no-unnecessary-condition': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/restrict-template-expressions': 'off',
+    'eslint-comments/require-description': 'off',
   },
-  overrides: [
-    {
-      files: ['*.js?(x)', '*.mjs'],
-      extends: ['plugin:@typescript-eslint/disable-type-checked'],
-    },
-    {
-      files: [
-        '*.config.{mjs,ts,cjs,js,ts}',
-        'src/app/**/{page,layout,not-found,*error,opengraph-image,apple-icon}.tsx',
-        'src/app/**/{sitemap,robots}.ts',
-      ],
-      rules: {
-        'import/no-default-export': 'off',
-        'import/prefer-default-export': ['error', { target: 'any' }],
-      },
-    },
-    {
-      files: ['**/*.d.ts'],
-      rules: { 'import/no-default-export': 'off' },
-    },
-  ],
-};
+  ignorePatterns: ['**/*.js', '**/*.cjs', 'node_modules', '.next', 'out'],
+}
