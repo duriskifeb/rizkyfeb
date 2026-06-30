@@ -48,7 +48,8 @@
     "**/*.cjs",
     "**/*.js",
     ".next/types/**/*.ts",
-    "src/components/blogs/index.tsx"
+    "src/components/blogs/index.tsx",
+    "next.config.mjs"
   ],
   "exclude": [
     "node_modules"

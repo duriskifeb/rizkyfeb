@@ -10,8 +10,8 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  // Cukup gunakan basePath, hapus assetPrefix
   basePath: '/rizkyfeb',
-  assetPrefix: '/rizkyfeb',
 };
 
 export default nextConfig;

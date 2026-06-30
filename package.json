@@ -10,7 +10,7 @@
     "lint": "next lint",
     "start": "next start",
     "predeploy": "pnpm run build",
-    "deploy": "pnpm run predeploy && gh-pages --dist out --branch gh-pages --message 'Deploy to GitHub Pages [skip ci]'",
+    "deploy": "pnpm run predeploy && gh-pages --dist out --branch gh-pages --dotfiles --message 'Deploy to GitHub Pages [skip ci]'",
     "deploy:clean": "pnpm run predeploy && gh-pages --dist out --branch gh-pages --message 'Deploy to GitHub Pages [skip ci]' --remove"
   },
   "dependencies": {
