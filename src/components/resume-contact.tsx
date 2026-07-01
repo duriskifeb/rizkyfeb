@@ -172,28 +172,28 @@ export const ResumeContact = () => {
               <p className='mb-5 text-xs font-medium uppercase tracking-widest text-gray-500'>Find me on</p>
               <div className='grid gap-3'>
                 <SocialLink
-                  href='https://linkedin.com/in/rizkyfeb'
+                  href='https://www.linkedin.com/in/duriskifeb/'
                   icon={<Linkedin className='h-5 w-5' />}
-                  label='Professional'
-                  username='@rizkyfeb'
+                  label='Linkedin Me'
+                  username='@duriskifeb'
                 />
                 <SocialLink
-                  href='https://github.com/rizkyfeb'
+                  href='https://github.com/duriskifeb'
                   icon={<Github className='h-5 w-5' />}
-                  label='Codebase'
-                  username='@rizkyfeb'
+                  label='Github Me'
+                  username='@duriskifeb'
                 />
                 <SocialLink
-                  href='https://instagram.com/rizkyfeb'
+                  href='https://www.instagram.com/duriskifeb/'
                   icon={<Instagram className='h-5 w-5' />}
-                  label='Lifestyle'
+                  label='Instagram'
                   username='@rizkyfeb'
                 />
                 <SocialLink
-                  href='https://wa.me/62812345678'
+                  href='https://wa.me/6282230199663'
                   icon={<MessageCircle className='h-5 w-5' />}
-                  label='Quick Chat'
-                  username='+62 812...'
+                  label='Chat Only'
+                  username='+6282230199663'
                 />
               </div>
             </div>

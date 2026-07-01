@@ -8,11 +8,10 @@ import { motion } from 'framer-motion';
 import { BinaryIcon, ArrowUp, Github, Twitter, Linkedin, Mail, MessageCircle } from 'lucide-react';
 
 const socialLinks = [
-  { icon: Twitter, href: 'https://x.com/rizkyfeb', label: 'Twitter' },
-  { icon: Linkedin, href: 'https://www.linkedin.com/in/rizkyfeb', label: 'LinkedIn' },
-  { icon: Github, href: 'https://github.com/rizkyfeb', label: 'GitHub' },
+  { icon: Linkedin, href: 'https://www.linkedin.com/in/duriskifeb/', label: 'LinkedIn' },
+  { icon: Github, href: 'https://github.com/duriskifeb', label: 'GitHub' },
   { icon: Mail, href: 'mailto:rizkyfeb@gmail.com', label: 'Email' },
-  { icon: MessageCircle, href: 'https://wa.me/62', label: 'WhatsApp' },
+  { icon: MessageCircle, href: 'https://wa.me/6282230199663', label: 'WhatsApp' },
 ];
 
 export const Footer = () => {
@@ -25,9 +24,8 @@ export const Footer = () => {
       }}
     >
       <div className='flex items-center gap-3'>
-        <BinaryIcon size='1.5rem' style={{ color: 'var(--text-muted)' }} />
         <span className='font-beatriceMedium text-sm' style={{ color: 'var(--text-muted)' }}>
-          © {new Date().getFullYear()} M Rizky Febriyanto
+          Made with ❤️ duriskifeb | copyright © {new Date().getFullYear()}
         </span>
       </div>
 

@@ -15,30 +15,30 @@ import {
 const stats = [
   {
     label: 'Semester',
-    value: '5th',
+    value: 'Semester 6',
     emoji: '🎓',
-    sub: 'Telkom Univ',
+    sub: 'Telkom University Surabaya',
     color: 'from-emerald-400 to-teal-300',
   },
   {
-    label: 'Focus',
-    value: 'RPL',
+    label: 'Major',
+    value: 'Software Engineering',
     emoji: '🎯',
-    sub: 'Software Eng.',
+    sub: 'Coding Enthusiast',
     color: 'from-teal-400 to-green-300',
   },
   {
-    label: 'Experience',
-    value: '1+',
+    label: 'Experience ',
+    value: '2+ organization and coding',
     emoji: '⏳',
-    sub: 'Years Coding',
+    sub: 'learning by doing',
     color: 'from-green-400 to-emerald-300',
   },
   {
     label: 'Status',
     value: 'Active',
     emoji: '🟢',
-    sub: 'Open to Work',
+    sub: 'open to work and internship',
     color: 'from-emerald-300 to-teal-400',
   },
 ];
@@ -47,9 +47,9 @@ const stats = [
 const techStack = [
   'Java', 'HTML5', 'CSS', 'JavaScript', 'TypeScript',
   'Dart', 'C#', 'Flutter', 'Next.js', 'Express.js',
-  'NestJS', 'Angular', 'Vue.js', 'JavaFX', 'SolidJS',
+  'NestJS', 'Vue.js', 'JavaFX', 'SolidJS', 'MongoDB',
   'Alpine.js', 'Filament', 'Laravel', 'PHP', 'MySQL',
-  'Blender', 'Figma', 'Git',
+  'Blender', 'Figma', 'Git', 'MySql', 'Postman',
 ];
 
 // ─── Stat Card ────────────────────────────────────────────────────────────────
