@@ -7,6 +7,15 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export const getAssetPath = (path: string): string => {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+  if (!path) return '';
+  if (path.startsWith('http') || path.startsWith('data:') || path.startsWith('blob:')) return path;
+  // Prevent duplicating base path
+  if (basePath && path.startsWith(basePath)) return path;
+  return `${basePath}${path.startsWith('/') ? '' : '/'}${path}`;
+};
+
 export const truncate = (
   str: string,
   length?: number,

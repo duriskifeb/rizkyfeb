@@ -6,6 +6,7 @@ import type { Metadata } from 'next';
 import { Footer, Navbar } from '~/components';
 import { QueryProvider } from '~/providers';
 import '~/styles/globals.css';
+import { getAssetPath } from '~/lib/utils';
 
 import { GrainEffect } from '~/components/grain-effect';
 import { Toaster } from '~/components/ui/sonner';
@@ -53,8 +54,8 @@ export const metadata: Metadata = {
   creator: 'Rizky Febriyanto',
   publisher: 'Rizky Febriyanto',
   authors: [{ name: 'Rizky Febriyanto' }],
-  manifest: '/rizkyfeb/manifest.json',
-  icons: [{ rel: 'icon', url: '/rizkyfeb/logo.png' }],
+  manifest: getAssetPath('/manifest.json'),
+  icons: [{ rel: 'icon', url: getAssetPath('/logo.png') }],
 
   twitter: {
     card: 'summary_large_image',

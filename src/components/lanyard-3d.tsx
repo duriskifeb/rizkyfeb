@@ -4,6 +4,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, extend, useFrame } from '@react-three/fiber';
+import { getAssetPath } from '~/lib/utils';
 import { useGLTF, useTexture, Environment, Lightformer } from '@react-three/drei';
 import {
   BallCollider,
@@ -55,11 +56,11 @@ function Band({
     linearDamping: 2,
   };
 
-  const { nodes, materials } = useGLTF('/card.glb');
+  const { nodes, materials } = useGLTF(getAssetPath('/card.glb'));
 
-  const frontSrc = frontImage ?? BLANK_PIXEL;
-  const backSrc = backImage ?? BLANK_PIXEL;
-  const lanyardSrc = lanyardImage ?? '/lanyard.png';
+  const frontSrc = frontImage ? getAssetPath(frontImage) : BLANK_PIXEL;
+  const backSrc = backImage ? getAssetPath(backImage) : BLANK_PIXEL;
+  const lanyardSrc = lanyardImage ? getAssetPath(lanyardImage) : getAssetPath('/lanyard.png');
 
   const [frontTex, backTex, bandTex] = useTexture([frontSrc, backSrc, lanyardSrc]);
 
@@ -314,4 +315,4 @@ export function Lanyard3D({
   );
 }
 
-useGLTF.preload('/card.glb');
+useGLTF.preload(getAssetPath('/card.glb'));

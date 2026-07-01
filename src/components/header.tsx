@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getAssetPath } from '~/lib/utils';
 
 // ─── Static particle data (deterministic — no hydration mismatch) ─────────────
 const PARTICLES = Array.from({ length: 60 }, (_, i) => ({
@@ -110,7 +111,7 @@ export const Header = () => {
             className='relative z-10 flex h-64 w-48 flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-white/10 bg-white/5 shadow-2xl backdrop-blur-md transition-transform hover:scale-105 hover:border-emerald-400/30 md:h-80 md:w-60'
           >
             <Image
-              src="/images/homepage.png"
+              src={getAssetPath("/images/homepage.png")}
               fill
               className="object-cover"
               alt="Profile"

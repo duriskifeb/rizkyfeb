@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { getAssetPath } from '~/lib/utils';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 interface GalleryProps {
@@ -38,7 +39,7 @@ const MarqueeRow = ({
             className='relative h-44 w-64 shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-[#033D2D]'
           >
             <Image
-              src={src}
+              src={getAssetPath(src)}
               alt={`Gallery image ${(i % images.length) + 1}`}
               fill
               className='object-cover transition-transform duration-700 hover:scale-105'

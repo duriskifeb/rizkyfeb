@@ -12,6 +12,9 @@ const nextConfig = {
   },
   // Cukup gunakan basePath, hapus assetPrefix
   basePath: '/rizkyfeb',
+  env: {
+    NEXT_PUBLIC_BASE_PATH: '/rizkyfeb',
+  },
 };
 
 export default nextConfig;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { getAssetPath } from '~/lib/utils';
 
 export const GrainEffect = () => {
   return (
@@ -6,7 +7,7 @@ export const GrainEffect = () => {
       <div
         className='grain-effect relative h-[100%] w-[100%]'
         style={{
-          backgroundImage: `url(/grain-texture.png)`,
+          backgroundImage: `url(${getAssetPath('/grain-texture.png')})`,
           backgroundPosition: '0px 0px',
           backgroundSize: '328px',
         }}
